@@ -1,2 +1,3 @@
 note:
-tulis ng kene
+- tulis ng kene
+- db durung di gawe
