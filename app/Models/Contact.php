@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Contact extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'name';
+    public $incrementing = false;
+    protected $keyType = 'string';
 }
