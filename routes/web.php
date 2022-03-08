@@ -2,6 +2,13 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ArticleController;
+use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\SlideshowController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,7 +20,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+Route::prefix('admin')->group(function () {
+    Route::resources([
+        'user' => UserController::class,
+        'category' => CategoryController::class,
+        'article' => ArticleController::class,
+        'slideshow' => SlideshowController::class,
+    ]);
+    Route::resource('contact', ContactController::class)->only([
+        'index', 'show', 'update'
+    ]);
+    Route::resource('profile', ProfileController::class)->only([
+        'index', 'show', 'update'
+    ]);
+});
 
 Auth::routes();
 Route::get('/', function () {
