@@ -19,20 +19,22 @@ use App\Http\Controllers\Admin\SlideshowController;
 |
 */
 
-Route::prefix('admin')->group(function () {
-    Route::resources([
-        'user' => UserController::class,
-        'category' => CategoryController::class,
-        'article' => ArticleController::class,
-        'slideshow' => SlideshowController::class,
-    ]);
-    Route::resource('contact', ContactController::class)->only([
-        'index', 'show', 'update'
-    ]);
-    Route::resource('profile', ProfileController::class)->only([
-        'index', 'show', 'update'
-    ]);
-});
+Route::prefix('admin')
+    ->middleware(['auth'])
+    ->group(function () {
+        Route::resources([
+            'user' => UserController::class,
+            'category' => CategoryController::class,
+            'article' => ArticleController::class,
+            'slideshow' => SlideshowController::class,
+        ]);
+        Route::resource('contact', ContactController::class)->only([
+            'index', 'show', 'update'
+        ]);
+        Route::resource('profile', ProfileController::class)->only([
+            'index', 'show', 'update'
+        ]);
+    });
 
 Auth::routes();
 Route::get('/', function () {

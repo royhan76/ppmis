@@ -1,3 +1,9 @@
 note:
 - tulis ng kene
 - db durung di gawe
+
+8 March 2022 - Mabrur
+Tutorial Set Up Pertama
+1. Set file .env Database di lokal
+2. "php artisan migrate" untuk generate table
+3. "php artisan db:seed" untuk generate akun admin
