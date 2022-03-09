@@ -22,5 +22,17 @@ class UserSeeder extends Seeder
             'role' => 'ADMIN',
             'password' => Hash::make('itppmis'),
         ]);
+        DB::table('users')->insert([
+            'name' => 'Mabrur',
+            'username' => 'mabrur.satori',
+            'role' => 'USER',
+            'password' => Hash::make('mabrursatori'),
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Roichani',
+            'username' => 'roichani',
+            'role' => 'USER',
+            'password' => Hash::make('roichani'),
+        ]);
     }
 }

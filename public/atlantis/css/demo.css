@@ -303,3 +303,8 @@ body[data-background-color="dark"] .demo-icon .icon-class {
 		right: -85%;
 	}
 }
+
+.invalid-custom
+{
+    border: 1px solid red;
+}

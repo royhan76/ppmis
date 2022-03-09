@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -14,7 +18,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.user');
+        $users = User::all();
+        return view(
+            'admin.pages.user.index',
+            [
+                'users' => $users,
+                'nama' => '<i>Mabrur</i>#$#%#"'
+            ],
+        );
     }
 
     /**
@@ -35,7 +46,12 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validated = $request->validate([
+            'name' => 'required',
+            'username' => 'required|unique:App\Models\User,username|alpha_dash',
+            'password' => 'required',
+        ]);
     }
 
     /**
