@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Slideshow;
+use Illuminate\Support\Facades\Storage;
 
 class SlideshowController extends Controller
 {
@@ -24,7 +26,7 @@ class SlideshowController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.slideshow.create');
     }
 
     /**
@@ -35,7 +37,28 @@ class SlideshowController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validated = $request->validate([
+            'image' => 'required|image|max:1024',
+            'order' => 'required|numeric|unique:App\Models\Slideshow,order',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+
+            $filename = random_int(1000, 9999) . '-' . time() . '.' . $file->getClientOriginalExtension();
+
+            Storage::disk('s3')->put('ppmis/images/' . $filename, file_get_contents($file));
+        }
+
+        return 'OK';
+
+        $slideshow = Slideshow::create([
+            'name' => $request->name,
+            'username' => $request->username,
+        ]);
+
+        return $slideshow;
     }
 
     /**
