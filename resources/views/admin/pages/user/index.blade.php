@@ -29,82 +29,14 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Add Row</h4>
-                                <button class="btn btn-primary btn-round ml-auto" data-toggle="modal"
-                                    data-target="#addUser">
+                                <a class="btn btn-primary btn-round ml-auto text-white" href="user/create">
                                     <i class="fa fa-plus"></i>
                                     Add User
-                                </button>
+                                </a>
                             </div>
                         </div>
                         <div class="card-body">
-                            <!-- Modal -->
-                            <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header no-bd">
-                                            <h5 class="modal-title">
-                                                <span class="fw-mediumbold">
-                                                    New</span>
-                                                <span class="fw-light">
-                                                    Row
-                                                </span>
-                                            </h5>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form method="POST" action="user">
-                                                @csrf
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div
-                                                            class="form-group form-group-default {{ $errors->first('name') ? 'has-error' : '' }}">
-                                                            <label>Name</label>
-                                                            <input id="name" type="text" class="form-control "
-                                                                placeholder="isi dengan nama" name="name"
-                                                                value="{{ old('name') }}">
-                                                            <small
-                                                                class="form-text text-muted">{{ $errors->first('name') }}</small>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 pr-0">
-                                                        <div
-                                                            class="form-group form-group-default {{ $errors->first('username') ? 'has-error' : '' }}">
-                                                            <label>Username</label>
-                                                            <input id="username" type="text" class="form-control"
-                                                                placeholder="isi dengan username" name="username"
-                                                                value="{{ old('username') }}">
-                                                            <small
-                                                                class="form-text text-muted">{{ $errors->first('username') }}</small>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div
-                                                            class="form-group form-group-default {{ $errors->first('password') ? 'has-error' : '' }}">
-                                                            <label>Password</label>
-                                                            <input id="password" type="password" class="form-control"
-                                                                placeholder="isi dengan password" name="password"
-                                                                value="{{ old('password') }}">
-                                                            <small
-                                                                class="form-text text-muted">{{ $errors->first('password') }}</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer no-bd">
-                                                    <button type="submit" id="addRowButton"
-                                                        class="btn btn-primary">Add</button>
-                                                    <button type="button" class="btn btn-danger"
-                                                        data-dismiss="modal">Close</button>
-                                                </div>
-                                            </form>
-                                        </div>
 
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="table-responsive">
                                 <table id="add-row" class="display table table-striped table-hover">
@@ -116,14 +48,6 @@
                                             <th style="width: 10%">Action</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Username</th>
-                                            <th>Role</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
                                         @forelse ($users as $user)
                                             <tr>
@@ -132,15 +56,23 @@
                                                 <td>{{ $user->role }}</td>
                                                 <td>
                                                     <div class="form-button-action">
-                                                        <button type="button" data-toggle="tooltip" title=""
-                                                            class="btn btn-link btn-primary btn-lg"
+                                                        <a href="{{ route('user.edit', $user->id) }}" type="button"
+                                                            data-toggle="tooltip"
+                                                            class="btn btn-link btn-primary btn-lg button-edit"
                                                             data-original-title="Edit Task">
                                                             <i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" data-toggle="tooltip" title=""
-                                                            class="btn btn-link btn-danger" data-original-title="Remove">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
+                                                        </a>
+                                                        <form class="form-delete" method="POST"
+                                                            onsubmit="return confirm('Apa kamu yakin?')"
+                                                            action="{{ route('user.destroy', [$user->id]) }}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" data-toggle="tooltip"
+                                                                class="btn btn-link btn-danger"
+                                                                data-original-title="Remove">
+                                                                <i class="fa fa-times"></i>
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -162,10 +94,91 @@
 @endsection
 @push('script-push')
     <script>
-        var isStoreErrror = {{ Illuminate\Support\Js::from($errors->any()) }};
+        $(document).ready(function() {
+            // let mainUrl = {{ Illuminate\Support\Js::from(Request::url()) }};
+            // let token = {{ Illuminate\Support\Js::from(csrf_token()) }};
 
-        if (isStoreErrror) {
-            $("#addUser").modal()
-        }
+            // var isStoreErrror = {{ Illuminate\Support\Js::from($errors->any()) }};
+
+            // if (isStoreErrror) {
+            //     showAlert("Berhasil!", status, "danger");
+            // }
+
+            var status = {{ Illuminate\Support\Js::from(session('status')) }};
+            if (status) {
+                showAlert("Success!", status, "success");
+            }
+
+            function showAlert(status, message, type) {
+                swal(status, message, {
+                    icon: type,
+                    buttons: {
+                        confirm: {
+                            className: 'btn btn-' + type
+                        }
+                    },
+                });
+            }
+
+            // function onUpdate(id){
+            //     console.log("UPDATE " +  id)
+            // }
+
+
+            //$(".form-delete").submit();
+            //});
+
+            // function getById(id){
+            //     console.log("GET BY ID " +  id)
+            // }
+
+            // $( ".button-edit" ).click(function() {
+            //         var id = $(this).data("id");
+            //         });
+
+
+            //         $.ajax({
+            //         method: "PUT",
+            //         url:  mainUrl + "/1",
+            //         data: null,
+            //         headers : {'X-CSRF-TOKEN': token},
+            //         success: function(data){
+            //             console.log(data);
+            //         },
+
+            //         });
+
+            $('#basic-datatables').DataTable({
+			});
+
+            $('#multi-filter-select').DataTable( {
+				"pageLength": 5,
+				initComplete: function () {
+					this.api().columns().every( function () {
+						var column = this;
+						var select = $('<select class="form-control"><option value=""></option></select>')
+						.appendTo( $(column.footer()).empty() )
+						.on( 'change', function () {
+							var val = $.fn.dataTable.util.escapeRegex(
+								$(this).val()
+								);
+
+							column
+							.search( val ? '^'+val+'$' : '', true, false )
+							.draw();
+						} );
+
+						column.data().unique().sort().each( function ( d, j ) {
+							select.append( '<option value="'+d+'">'+d+'</option>' )
+						} );
+					} );
+				}
+			});
+
+            // Add Row
+			$('#add-row').DataTable({
+				"pageLength": 5,
+			});
+        });
     </script>
 @endpush

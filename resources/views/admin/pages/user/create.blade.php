@@ -6,7 +6,7 @@
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">Edit Users</h4>
+                <h4 class="page-title">Add Users</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="#">
@@ -23,7 +23,7 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Edit User</a>
+                        <a href="#">Add User</a>
                     </li>
                 </ul>
             </div>
@@ -40,25 +40,22 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('user.update', $user->id) }}">
-                                @method('PUT')
+                            <form method="POST" action="{{ route('user.store') }}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">
                                         {{-- USERNAME --}}
                                         <div class="form-group {{ $errors->first('username') ? 'has-error' : '' }}">
                                             <label for="username">Username</label>
-                                            <input type="text"
-                                                value="{{ old('username') ? old('username') : $user->username }}"
-                                                class="form-control " id="username" name="username"
-                                                placeholder="Enter Username">
+                                            <input type="text" value="{{ old('username') }}" class="form-control "
+                                                id="username" name="username" placeholder="Enter Username">
                                             <small class="form-text text-danger"> {{ $errors->first('username') }}</small>
                                         </div>
                                         {{-- NAME --}}
                                         <div class="form-group {{ $errors->first('name') ? 'has-error' : '' }}">
                                             <label for="name">Name</label>
-                                            <input type="text" value="{{ old('name') ? old('name') : $user->name }}"
-                                                name="name" class="form-control" id="name" placeholder="Enter Name">
+                                            <input type="text" value="{{ old('name') }}" name="name"
+                                                class="form-control" id="name" placeholder="Enter Name">
                                             <small class="form-text text-danger"> {{ $errors->first('name') }}</small>
                                         </div>
                                     </div>
@@ -68,9 +65,7 @@
                                             <label for="password">Password</label>
                                             <input type="password" name="password" class="form-control" id="password"
                                                 placeholder="Enter Password">
-                                            <input type="hidden" value="{{ $user->password }}" name="old_password">
-                                            <small class="form-text text-danger">
-                                                {{ $errors->first('password') }}</small>
+                                            <small class="form-text text-danger"> {{ $errors->first('password') }}</small>
                                         </div>
                                         {{-- RE-PASSWORD --}}
                                         <div class="form-group {{ $errors->first('repassword') ? 'has-error' : '' }}">

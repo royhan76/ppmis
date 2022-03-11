@@ -1,9 +1,8 @@
 <div class="main-header">
     <!-- Logo Header -->
     <div class="logo-header" data-background-color="blue">
-
         <a href="index.html" class="logo">
-            <img src="../atlantis/img/logo.svg" alt="navbar brand" class="navbar-brand">
+            <img src="{{ asset('atlantis/img/logo.svg') }}" alt="navbar brand" class="navbar-brand">
         </a>
         <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
             data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +59,7 @@
                                 <div class="notif-center">
                                     <a href="#">
                                         <div class="notif-img">
-                                            <img src="../atlantis/img/jm_denis.jpg" alt="Img Profile">
+                                            <img src="{{ asset('atlantis/img/jm_denis.jpg') }}" alt="Img Profile">
                                         </div>
                                         <div class="notif-content">
                                             <span class="subject">Jimmy Denis</span>
@@ -72,7 +71,7 @@
                                     </a>
                                     <a href="#">
                                         <div class="notif-img">
-                                            <img src="../atlantis/img/chadengle.jpg" alt="Img Profile">
+                                            <img src="{{ asset('atlantis/img/chadengle.jpg') }}" alt="Img Profile">
                                         </div>
                                         <div class="notif-content">
                                             <span class="subject">Chad</span>
@@ -84,7 +83,7 @@
                                     </a>
                                     <a href="#">
                                         <div class="notif-img">
-                                            <img src="../atlantis/img/mlane.jpg" alt="Img Profile">
+                                            <img src="{{ asset('atlantis/img/mlane.jpg') }}" alt="Img Profile">
                                         </div>
                                         <div class="notif-content">
                                             <span class="subject">Jhon Doe</span>
@@ -96,7 +95,7 @@
                                     </a>
                                     <a href="#">
                                         <div class="notif-img">
-                                            <img src="../atlantis/img/talha.jpg" alt="Img Profile">
+                                            <img src="{{ asset('atlantis/img/talha.jpg') }}" alt="Img Profile">
                                         </div>
                                         <div class="notif-content">
                                             <span class="subject">Talha</span>
@@ -150,7 +149,7 @@
                                     </a>
                                     <a href="#">
                                         <div class="notif-img">
-                                            <img src="../atlantis/img/profile2.jpg" alt="Img Profile">
+                                            <img src="{{ asset('atlantis/img/profile2.jpg') }}" alt="Img Profile">
                                         </div>
                                         <div class="notif-content">
                                             <span class="block">
@@ -234,14 +233,15 @@
                 <li class="nav-item dropdown hidden-caret">
                     <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                         <div class="avatar-sm">
-                            <img src="../atlantis/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+                            <img src="{{ asset('atlantis/img/profile.jpg') }}" alt="..."
+                                class="avatar-img rounded-circle">
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-user animated fadeIn">
                         <div class="dropdown-user-scroll scrollbar-outer">
                             <li>
                                 <div class="user-box">
-                                    <div class="avatar-lg"><img src="../atlantis/img/profile.jpg"
+                                    <div class="avatar-lg"><img src="{{ asset('atlantis/img/profile.jpg') }}"
                                             alt="image profile" class="avatar-img rounded"></div>
                                     <div class="u-text">
                                         <h4>Hizrian</h4>
