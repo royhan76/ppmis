@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SlideshowController;
+use App\Http\Controllers\Admin\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,28 +21,32 @@ use App\Http\Controllers\Admin\SlideshowController;
 |
 */
 
-Route::prefix('admin')->group(function () {
-    Route::resources([
-        'user' => UserController::class,
-        'category' => CategoryController::class,
-        'article' => ArticleController::class,
-        'slideshow' => SlideshowController::class,
-    ]);
-    Route::resource('contact', ContactController::class)->only([
-        'index', 'show', 'update'
-    ]);
-    Route::resource('profile', ProfileController::class)->only([
-        'index', 'show', 'update'
-    ]);
-});
+Route::prefix('admin')
+    ->middleware(['auth'])
+    ->group(function () {
+        Route::resources([
+            'user' => UserController::class,
+            'category' => CategoryController::class,
+            'article' => ArticleController::class,
+            'slideshow' => SlideshowController::class,
+        ]);
+        Route::resource('contact', ContactController::class)->only([
+            'index', 'show', 'update'
+        ]);
+        Route::resource('profile', ProfileController::class)->only([
+            'index', 'show', 'update'
+        ]);
+        Route::get('', DashboardController::class)->name('dashboard');
+        Route::redirect('dashboard', '/admin');
+    });
 
 Auth::routes();
 Route::get('/', function () {
     return view('layouts.home.home');
 });
-Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', [\App\Http\Controllers\AdminController::class, 'index'])->name('dashboard');
-});
+// Route::prefix('admin')->group(function () {
+//     Route::get('/dashboard', [\App\Http\Controllers\AdminController::class, 'index'])->name('dashboard');
+// });
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
