@@ -6,7 +6,7 @@
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">Edit Slideshows</h4>
+                <h4 class="page-title">Add Slideshows</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="#">
@@ -23,7 +23,7 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Edit Slideshow</a>
+                        <a href="#">Add Slideshow</a>
                     </li>
                 </ul>
             </div>
@@ -34,23 +34,21 @@
                         <div class="card-header">
                             <div>
                                 <a class="btn btn-primary btn-round ml-auto text-white"
-                                    href="{{ route('slideshow.index') }}">
+                                    href="{{ route('slideshow.create') }}">
                                     <i class="fa fa-arrow-left"></i>
                                     Back
                                 </a>
                             </div>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('slideshow.update', $slideshow->id) }}"
-                                enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('slideshow.store') }}" enctype="multipart/form-data">
                                 @csrf
-                                @method('PUT')
-                                <input type="hidden" name="oldimage" value="{{ $slideshow->image }}">
+
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="avatar avatar-xxl" style="width: 500px; height: 200px">
-                                            <img src="{{ $slideshow->image_url }}" id="output" style="object-fit: fill;"
-                                                class="avatar-img rounded">
+                                            <img src="{{ asset('atlantis/img/image.png') }}" id="output"
+                                                style="object-fit: fill;" class="avatar-img rounded">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -67,8 +65,7 @@
                                         <div class="form-group {{ $errors->first('order') ? 'has-error' : '' }}">
                                             <label for="order">Order</label>
                                             <input type="number" name="order" class="form-control" id="order"
-                                                placeholder="Enter Order Number"
-                                                value="{{ old('order') ?? $slideshow->order }}">
+                                                placeholder="Enter Order Number" value="{{ old('order') }}">
                                             <small class="form-text text-danger"> {{ $errors->first('order') }}</small>
                                         </div>
                                         <div class="card-action d-flex justify-content-end">
