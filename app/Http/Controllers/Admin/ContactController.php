@@ -16,7 +16,8 @@ class ContactController extends Controller
     public function index()
     {
         $contacts = Contact::all();
-        return $contacts;
+
+        return view('admin.pages.contact.index', ['contacts' => $contacts]);
     }
 
     /**
@@ -57,9 +58,10 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($name)
     {
-        //
+        $contact = Contact::find($name);
+        return view('admin.pages.contact.edit', ['contact' => $contact]);
     }
 
     /**
@@ -69,9 +71,18 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $name)
     {
-        //
+        $validated = $request->validate([
+            'label' => 'required',
+            'url' => 'required'
+        ]);
+        $contact = Contact::find($name);
+        $contact->label = $request->label;
+        $contact->url = $request->url;
+        $contact->save();
+
+        return redirect('admin/contact')->with('status', 'Contact Berhasil Diupdate!');
     }
 
     /**

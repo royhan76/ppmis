@@ -31,10 +31,10 @@ Route::prefix('admin')
             'slideshow' => SlideshowController::class,
         ]);
         Route::resource('contact', ContactController::class)->only([
-            'index', 'show', 'update'
+            'index', 'edit', 'update'
         ]);
         Route::resource('profile', ProfileController::class)->only([
-            'index', 'show', 'update'
+            'index', 'edit', 'update'
         ]);
         Route::get('', DashboardController::class)->name('dashboard');
         Route::redirect('dashboard', '/admin');

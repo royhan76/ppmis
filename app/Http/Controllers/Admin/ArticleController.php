@@ -27,7 +27,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.article.create');
     }
 
     /**
