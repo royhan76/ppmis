@@ -12,10 +12,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     /**
      * Show the application dashboard.
@@ -24,10 +24,5 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $data = DB::table('food')
-            ->get();
-        // return $data;
-
-        return view('home', $data);
     }
 }
