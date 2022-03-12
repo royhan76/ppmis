@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Slideshow;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class SlideshowController extends Controller
 {
@@ -16,7 +17,9 @@ class SlideshowController extends Controller
      */
     public function index()
     {
-        //
+        $slideshows = Slideshow::orderBy('order')->get();
+
+        return view('admin.pages.slideshow.index', ['slideshows' => $slideshows]);
     }
 
     /**
@@ -37,28 +40,28 @@ class SlideshowController extends Controller
      */
     public function store(Request $request)
     {
-
+        // return $request->file('image');
         $validated = $request->validate([
             'image' => 'required|image|max:1024',
             'order' => 'required|numeric|unique:App\Models\Slideshow,order',
         ]);
 
+        $filename = '';
         if ($request->hasFile('image')) {
             $file = $request->file('image');
 
             $filename = random_int(1000, 9999) . '-' . time() . '.' . $file->getClientOriginalExtension();
 
-            Storage::disk('s3')->put('ppmis/images/' . $filename, file_get_contents($file));
+            Storage::disk('s3')->put('ppmis/images/slideshow/' . $filename, file_get_contents($file));
         }
 
-        return 'OK';
 
         $slideshow = Slideshow::create([
-            'name' => $request->name,
-            'username' => $request->username,
+            'image' => $filename,
+            'order' => $request->order,
         ]);
 
-        return $slideshow;
+        return redirect('admin/slideshow')->with('status', 'Slideshow Berhasil Ditambahkan!');
     }
 
     /**
@@ -69,7 +72,7 @@ class SlideshowController extends Controller
      */
     public function show($id)
     {
-        //
+        return $id;
     }
 
     /**
@@ -80,7 +83,14 @@ class SlideshowController extends Controller
      */
     public function edit($id)
     {
-        //
+        $slideshow = Slideshow::find($id);
+        //return $slideshow;
+        return view(
+            'admin.pages.slideshow.edit',
+            [
+                'slideshow' => $slideshow
+            ],
+        );
     }
 
     /**
@@ -92,7 +102,33 @@ class SlideshowController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // return $request->file('image');
+        $validated = $request->validate([
+            'image' => 'image|max:1024',
+            'order' => ['required', 'numeric', Rule::unique('slideshows')->ignore($id)],
+        ]);
+
+        $filename = '';
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+
+            $filename = random_int(1000, 9999) . '-' . time() . '.' . $file->getClientOriginalExtension();
+
+            Storage::disk('s3')->put('ppmis/images/slideshow/' . $filename, file_get_contents($file));
+
+            Storage::disk('s3')->delete('ppmis/images/slideshow/' . $request->oldimage);
+        }
+
+        $slideshow = Slideshow::find($id);
+        if ($filename != '') $slideshow->image = $filename;
+        $slideshow->order = $request->order;
+        $slideshow->save();
+
+
+
+
+        return redirect('admin/slideshow')->with('status', 'Slideshow Berhasil Ditambahkan!');
     }
 
     /**
@@ -103,6 +139,10 @@ class SlideshowController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $slideshow = Slideshow::find($id);
+
+        Storage::disk('s3')->delete('ppmis/images/slideshow/' . $slideshow->image);
+        $slideshow->delete();
+        return redirect('admin/slideshow')->with('status', 'Slideshow Berhasil Dihapus!');
     }
 }

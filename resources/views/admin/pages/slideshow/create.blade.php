@@ -33,7 +33,8 @@
                     <div class="card">
                         <div class="card-header">
                             <div>
-                                <a class="btn btn-primary btn-round ml-auto text-white" href="{{ route('user.store') }}">
+                                <a class="btn btn-primary btn-round ml-auto text-white"
+                                    href="{{ route('slideshow.create') }}">
                                     <i class="fa fa-arrow-left"></i>
                                     Back
                                 </a>
@@ -46,15 +47,16 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="avatar avatar-xxl" style="width: 500px; height: 200px">
-                                            <img src="{{ asset('atlantis/img/jm_denis.jpg') }}" alt="..."
-                                                class="avatar-img rounded">
+                                            <img src="{{ asset('atlantis/img/image.png') }}" id="output"
+                                                style="object-fit: fill;" class="avatar-img rounded">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         {{-- IMAGE --}}
                                         <div class="form-group {{ $errors->first('image') ? 'has-error' : '' }}">
                                             <label for="exampleFormControlFile1">Image</label>
-                                            <input type="file" class="form-control-file" name="image" id="image">
+                                            <input type="file" class="form-control-file" accept="image/*" name=" image"
+                                                id="image">
                                             <small class="form-text text-danger"> {{ $errors->first('image') }}</small>
                                         </div>
                                     </div>
@@ -63,7 +65,7 @@
                                         <div class="form-group {{ $errors->first('order') ? 'has-error' : '' }}">
                                             <label for="order">Order</label>
                                             <input type="number" name="order" class="form-control" id="order"
-                                                placeholder="Enter Order Number">
+                                                placeholder="Enter Order Number" value="{{ old('order') }}">
                                             <small class="form-text text-danger"> {{ $errors->first('order') }}</small>
                                         </div>
                                         <div class="card-action d-flex justify-content-end">
@@ -86,9 +88,12 @@
         $(document).ready(function() {
             // let mainUrl = {{ Illuminate\Support\Js::from(Request::url()) }};
             // let token = {{ Illuminate\Support\Js::from(csrf_token()) }};
-
-
-
+            image.onchange = evt => {
+                const [file] = image.files
+                if (file) {
+                    output.src = URL.createObjectURL(file)
+                }
+            }
 
             var isStoreErrror = {{ Illuminate\Support\Js::from($errors->any()) }};
 
