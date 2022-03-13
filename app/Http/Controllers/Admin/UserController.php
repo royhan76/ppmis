@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -19,6 +20,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->role != 'ADMIN') return redirect('admin');
         $users = User::all();
         return view(
             'admin.pages.user.index',
@@ -35,6 +37,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->role != 'ADMIN') return redirect('admin');
         return view("admin.pages.user.create");
     }
 
@@ -46,7 +49,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
+        if (Auth::user()->role != 'ADMIN') return redirect('admin');
         $validated = $request->validate([
             'name' => 'required|min:6|max:50',
             'username' => 'required|unique:App\Models\User,username|alpha_dash|min:6|max:50',
@@ -72,13 +75,6 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
-        return view(
-            'admin.pages.user.edit',
-            [
-                'user' => $user
-            ],
-        );
     }
 
     /**
@@ -89,6 +85,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        if (Auth::user()->id != $id) return redirect('admin');
         $user = User::find($id);
         return view(
             'admin.pages.user.edit',
@@ -107,12 +104,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        if (Auth::user()->id != $id) return redirect('admin');
         $validated = $request->validate([
             'name' => 'required|min:6|max:50',
             'username' => ['required', 'alpha_dash', 'min:6', 'max:50', Rule::unique('users')->ignore($id)],
         ]);
 
-        $user = User::find(1);
+        $user = User::find($id);
         $user->username =  $request->username;
         $user->name = $request->name;
         $user->password = ($request->password != null) ? Hash::make($request->password) : $request->old_password;
@@ -129,7 +128,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-
+        if (Auth::user()->role != 'ADMIN') return redirect('admin');
         try {
             $user = User::find($id);
             $user->delete();

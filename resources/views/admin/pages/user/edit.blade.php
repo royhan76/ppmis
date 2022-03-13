@@ -32,12 +32,15 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <div>
-                                <a class="btn btn-primary btn-round ml-auto text-white" href="{{ route('user.store') }}">
-                                    <i class="fa fa-arrow-left"></i>
-                                    Back
-                                </a>
-                            </div>
+                            @if(Auth::user()->role == 'ADMIN')
+                                <div>
+                                    <a class="btn btn-primary btn-round ml-auto text-white" href="{{ route('user.index') }}">
+                                        <i class="fa fa-arrow-left"></i>
+                                        Back
+                                    </a>
+                                </div>
+                            @endif
+
                         </div>
                         <div class="card-body">
                             <form method="POST" action="{{ route('user.update', $user->id) }}">

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Validation\Rule;
+use Exception;
 
 class CategoryController extends Controller
 {
@@ -105,9 +106,13 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::find($id);
+        try{
+            $category->delete();
 
-        $category->delete();
+            return redirect('admin/category')->with('status', 'Category Berhasil Dihapus!');
+        }catch(Exception $e){
+            return redirect('admin/category')->with('status', 'Category Gagal Dihapus!');
+        }
 
-        return redirect('admin/category')->with('status', 'Category Berhasil Dihapus!');
     }
 }

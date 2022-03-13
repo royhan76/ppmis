@@ -40,7 +40,11 @@ Route::prefix('admin')
         Route::redirect('dashboard', '/admin');
     });
 
-Auth::routes();
+Auth::routes([
+    'register' => false, 
+    'reset' => false,
+    'verify' => false,
+]);
 Route::get('/', function () {
     return view('layouts.home.home');
 });

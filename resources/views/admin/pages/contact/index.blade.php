@@ -135,7 +135,7 @@
             $('#basic-datatables').DataTable({
 			});
 
-            $('#multi-filter-select').DataTable( {
+           $('#multi-filter-select').DataTable( {
 				"pageLength": 5,
 				initComplete: function () {
 					this.api().columns().every( function () {

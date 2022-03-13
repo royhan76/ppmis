@@ -33,53 +33,85 @@
                     <div class="card">
                         <div class="card-header">
                             <div>
-                                <a class="btn btn-primary btn-round ml-auto text-white" href="{{ route('user.store') }}">
+                                <a class="btn btn-primary btn-round ml-auto text-white"
+                                    href="{{ route('article.index') }}">
                                     <i class="fa fa-arrow-left"></i>
                                     Back
                                 </a>
                             </div>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('user.store') }}">
+                            <form method="POST" action="{{ route('article.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">
-                                        {{-- USERNAME --}}
-                                        <div class="form-group {{ $errors->first('username') ? 'has-error' : '' }}">
-                                            <label for="username">Username</label>
-                                            <input type="text" value="{{ old('username') }}" class="form-control "
-                                                id="username" name="username" placeholder="Enter Username">
-                                            <small class="form-text text-danger"> {{ $errors->first('username') }}</small>
+                                        {{-- IMAGE --}}
+                                        <div class="form-group {{ $errors->first('image') ? 'has-error' : '' }}">
+                                            <label for="image">Image</label>
+                                            <input type="file" class="form-control-file" accept="image/*" name="image"
+                                                id="image">
+                                            <small class="form-text text-danger"> {{ $errors->first('image') }}</small>
                                         </div>
-                                        {{-- NAME --}}
-                                        <div class="form-group {{ $errors->first('name') ? 'has-error' : '' }}">
-                                            <label for="name">Name</label>
-                                            <input type="text" value="{{ old('name') }}" name="name"
-                                                class="form-control" id="name" placeholder="Enter Name">
-                                            <small class="form-text text-danger"> {{ $errors->first('name') }}</small>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="avatar avatar-xxl" style="width: 400px; height: 300px;">
+                                            <img src="{{ asset('atlantis/img/image.png') }}" id="output"
+                                                style="object-fit: fill;" class="avatar-img rounded">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        {{-- PASSWORD --}}
-                                        <div class="form-group {{ $errors->first('password') ? 'has-error' : '' }}">
-                                            <label for="password">Password</label>
-                                            <input type="password" name="password" class="form-control" id="password"
-                                                placeholder="Enter Password">
-                                            <small class="form-text text-danger"> {{ $errors->first('password') }}</small>
+                                        {{-- TITLE --}}
+                                        <div class="form-group {{ $errors->first('title') ? 'has-error' : '' }}">
+                                            <label for="title">Title</label>
+                                            <input type="text" value="{{ old('title') }}" name="title"
+                                                class="form-control" id="title" placeholder="Enter title">
+                                            <small class="form-text text-danger"> {{ $errors->first('title') }}</small>
                                         </div>
-                                        {{-- RE-PASSWORD --}}
-                                        <div class="form-group {{ $errors->first('repassword') ? 'has-error' : '' }}">
-                                            <label for="repassword">Ulangi Password</label>
-                                            <input type="password" name="repassword" class="form-control" id="repassword"
-                                                placeholder="Ulangi Password">
-                                            <small class="form-text text-danger">
-                                                {{ $errors->first('repassword') }}</small>
-                                        </div>
-
                                     </div>
+                                    {{-- CATEGORY --}}
+                                    <div class="col-md-6">
+                                        <div class="form-group {{ $errors->first('category') ? 'has-error' : '' }}">
+                                            <label for="category_id">Category</label>
+                                            <select class="form-control" id="category" name="category">
+                                                <option value="">SELECT CATEGORY</option>
+                                                @foreach ($categories as $category)
+                                                    <option
+                                                        {{ old('category') && old('category') == $category->id ? 'selected' : '' }}
+                                                        value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @endforeach
+
+
+                                            </select>
+                                            <small class="form-text text-danger">
+                                                {{ $errors->first('category') }}</small>
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-12">
-                                        <textarea name="content" id="content" rows="10" cols="80">
-                                                    </textarea>
+                                        {{-- CAPTION --}}
+                                        <div class="form-group {{ $errors->first('caption') ? 'has-error' : '' }}">
+                                            <label for="caption">Image Caption</label>
+                                            <input type="text" value="{{ old('caption') }}" name="caption"
+                                                class="form-control" id="caption" placeholder="Enter Caption">
+                                            <small class="form-text text-danger">
+                                                {{ $errors->first('caption') }}</small>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-12">
+                                        <div class="form-group {{ $errors->first('content') ? 'has-error' : '' }}">
+                                            <label for="content">Content</label>
+                                            <textarea name="content" id="content" rows="10"
+                                                cols="80">{!! old('content') !!}</textarea>
+                                            <small class="form-text text-danger"> {{ $errors->first('content') }}</small>
+                                            <div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="card-action d-flex justify-content-end">
@@ -113,7 +145,12 @@
             // let mainUrl = {{ Illuminate\Support\Js::from(Request::url()) }};
             // let token = {{ Illuminate\Support\Js::from(csrf_token()) }};
 
-
+            image.onchange = evt => {
+                const [file] = image.files
+                if (file) {
+                    output.src = URL.createObjectURL(file)
+                }
+            }
 
 
             var isStoreErrror = {{ Illuminate\Support\Js::from($errors->any()) }};

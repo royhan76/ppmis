@@ -114,7 +114,7 @@
                                         <div class="form-group {{ $errors->first('content') ? 'has-error' : '' }}">
                                             <label for="content">Content</label>
                                             <textarea name="content" id="content" rows="10"
-                                                cols="80">{!! $profile->content !!}</textarea>
+                                                cols="80">{!! old('content') ?? $profile->content !!}</textarea>
                                             <small class="form-text text-danger"> {{ $errors->first('content') }}</small>
                                             <div>
                                             </div>
@@ -124,6 +124,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
                             </form>
                         </div>
                     </div>

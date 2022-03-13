@@ -89,95 +89,55 @@
     </div>
 @endsection
 @push('script-push')
-    {{-- <script>
-        $(document).ready(function() {
-                    // let mainUrl = {{ Illuminate\Support\Js::from(Request::url()) }};
-                    // let token = {{ Illuminate\Support\Js::from(csrf_token()) }};
+<script>
+    $(document).ready(function() {
+                var status = {{ Illuminate\Support\Js::from(session('status')) }};
+                if (status) {
+                    showAlert("Success!", status, "success");
+                }
 
-                    // var isStoreErrror = {{ Illuminate\Support\Js::from($errors->any()) }};
-
-                    // if (isStoreErrror) {
-                    //     showAlert("Berhasil!", status, "danger");
-                    // }
-
-                    var status = {{ Illuminate\Support\Js::from(session('status')) }};
-                    if (status) {
-                        showAlert("Success!", status, "success");
-                    }
-
-                    function showAlert(status, message, type) {
-                        swal(status, message, {
-                            icon: type,
-                            buttons: {
-                                confirm: {
-                                    className: 'btn btn-' + type
-                                }
-                            },
-                        });
-                    }
-
-                    // function onUpdate(id){
-                    //     console.log("UPDATE " +  id)
-                    // }
-
-
-                    //$(".form-delete").submit();
-                    //});
-
-                    // function getById(id){
-                    //     console.log("GET BY ID " +  id)
-                    // }
-
-                    // $( ".button-edit" ).click(function() {
-                    //         var id = $(this).data("id");
-                    //         });
-
-
-                    //         $.ajax({
-                    //         method: "PUT",
-                    //         url:  mainUrl + "/1",
-                    //         data: null,
-                    //         headers : {'X-CSRF-TOKEN': token},
-                    //         success: function(data){
-                    //             console.log(data);
-                    //         },
-
-                    //         });
-
-                    $('#basic-datatables').DataTable({});
-
-                    $('#multi-filter-select').DataTable({
-                            "pageLength": 5,
-                            initComplete: function() {
-                                this.api().columns().every(function() {
-                                        var column = this;
-                                        var select = $(
-                                                '<select class="form-control"><option value=""></option></select>'
-                                                )
-                                            .appendTo($(column.footer()).empty())
-                                            .on('change', function() {
-                                                    var val = $.fn.dataTable.util.escapeRegex(
-                                                        $(this).val()
-                                                    );
-
-                                                    column
-                                                        .search(val ? '^' + val + '@endpush : '
-                                                            ', true, false )
-                                                            .draw();
-                                                        });
-
-                                                column.data().unique().sort().each(function(d, j) {
-                                                    select.append('<option value="' + d + '">' + d +
-                                                        '</option>')
-                                                });
-                                            });
-                                }
-                            });
-
-                        // Add Row
-                        $('#add-row').DataTable({
-                            "pageLength": 5,
-                        });
+                function showAlert(status, message, type) {
+                    swal(status, message, {
+                        icon: type,
+                        buttons: {
+                            confirm: {
+                                className: 'btn btn-' + type
+                            }
+                        },
                     });
-    </script> --}}
+                }
+
+                $('#basic-datatables').DataTable({
+                    });
+
+                    $('#multi-filter-select').DataTable( {
+                    "pageLength": 5,
+                    initComplete: function () {
+                        this.api().columns().every( function () {
+                            var column = this;
+                            var select = $('<select class="form-control"><option value=""></option></select>')
+                            .appendTo( $(column.footer()).empty() )
+                            .on( 'change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                    );
+
+                                column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                            } );
+
+                            column.data().unique().sort().each( function ( d, j ) {
+                                select.append( '<option value="'+d+'">'+d+'</option>' )
+                            } );
+                        } );
+                    }
+                });
+
+                $('#add-row').DataTable({
+                    "pageLength": 5,
+                });
+
+                });
+</script>
 @endpush
