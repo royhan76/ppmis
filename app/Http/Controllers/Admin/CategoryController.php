@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Category;
+use Illuminate\Validation\Rule;
+use Exception;
 
 class CategoryController extends Controller
 {
@@ -14,7 +17,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+
+        return view('admin.pages.category.index', ['categories' => $categories]);
     }
 
     /**
@@ -24,7 +29,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.category.create');
     }
 
     /**
@@ -35,7 +40,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->name = strtoupper($request->name);
+        $validated = $request->validate([
+            'name' => 'required|unique:App\Models\Category,name',
+        ]);
+
+        $category = Category::create([
+            'name' => $request->name
+        ]);
+
+        return redirect('admin/category')->with('status', 'Category Berhasil Ditambahkan!');
     }
 
     /**
@@ -57,7 +71,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::find($id);
+
+        return view('admin.pages.category.edit', ['category' => $category]);
     }
 
     /**
@@ -69,7 +85,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->name = strtoupper($request->name);
+        $validated = $request->validate([
+            'name' => ['required', Rule::unique('categories')->ignore($id)],
+        ]);
+
+        $category = Category::find($id);
+        $category->name = $request->name;
+        $category->save();
+
+        return redirect('admin/category')->with('status', 'Category Berhasil Diupdate!');
     }
 
     /**
@@ -80,6 +105,14 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::find($id);
+        try{
+            $category->delete();
+
+            return redirect('admin/category')->with('status', 'Category Berhasil Dihapus!');
+        }catch(Exception $e){
+            return redirect('admin/category')->with('status', 'Category Gagal Dihapus!');
+        }
+
     }
 }

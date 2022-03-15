@@ -9,6 +9,7 @@
     <link rel="icon" href="../atlantis/img/icon.ico" type="image/x-icon" />
 
     @include('admin.includes.style')
+    @stack('top-ckeditor')
 </head>
 
 <body>
@@ -99,6 +100,7 @@
         <!-- End Custom template -->
     </div>
     @include('admin.includes.script')
+    @stack('bottom-ckeditor')
     @stack('script-push')
 </body>
 
