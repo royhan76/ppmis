@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SlideshowController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,16 +42,17 @@ Route::prefix('admin')
     });
 
 Auth::routes([
-    'register' => false, 
+    'register' => false,
     'reset' => false,
     'verify' => false,
 ]);
-Route::get('/', function () {
-    return view('layouts.home.home');
+Route::get('/', [HomeController::class, 'index']);
+Route::prefix('/')->group(function () {
+    Route::get('detail/{id}', [HomeController::class, 'articleDetail']);
 });
 // Route::prefix('admin')->group(function () {
 //     Route::get('/dashboard', [\App\Http\Controllers\AdminController::class, 'index'])->name('dashboard');
 // });
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

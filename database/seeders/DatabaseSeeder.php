@@ -22,12 +22,12 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
         $this->call([
-            UserSeeder::class,
-            ContactSeeder::class,
+            // UserSeeder::class,
+            // ContactSeeder::class,
             ProfileSeeder::class,
-            SlideshowSeeder::class,
-            CategorySeeder::class,
-            ArticleSeeder::class
+            // SlideshowSeeder::class,
+            // CategorySeeder::class,
+            // ArticleSeeder::class
         ]);
     }
 }
