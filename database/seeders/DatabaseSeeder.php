@@ -10,6 +10,8 @@ use Database\Seeders\ProfileSeeder;
 use Database\Seeders\SlideshowSeeder;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\ArticleSeeder;
+use Database\Seeders\DormitorySeeder;
+use Database\Seeders\RoomSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -27,7 +29,9 @@ class DatabaseSeeder extends Seeder
             ProfileSeeder::class,
              SlideshowSeeder::class,
              CategorySeeder::class,
-             ArticleSeeder::class
+             ArticleSeeder::class,
+             DormitorySeeder::class,
+             RoomSeeder::class
         ]);
     }
 }

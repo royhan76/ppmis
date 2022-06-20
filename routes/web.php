@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SlideshowController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\DormitoryController;
+use App\Http\Controllers\Admin\RoomController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +32,8 @@ Route::prefix('admin')
             'category' => CategoryController::class,
             'article' => ArticleController::class,
             'slideshow' => SlideshowController::class,
+            'dormitory' => DormitoryController::class,
+            'room' => RoomController::class
         ]);
         Route::resource('contact', ContactController::class)->only([
             'index', 'edit', 'update'

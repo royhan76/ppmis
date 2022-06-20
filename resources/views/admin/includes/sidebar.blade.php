@@ -65,6 +65,11 @@
 											<span class="sub-item">Contact</span>
 										</a>
 									</li>
+									<li>
+										<a href="{{ route('dormitory.index') }}">
+											<span class="sub-item">Komplek</span>
+										</a>
+									</li>
 								</ul>
 							</div>
 						</li>

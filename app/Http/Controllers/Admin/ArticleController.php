@@ -24,7 +24,7 @@ class ArticleController extends Controller
         if (Auth::user()->role == 'ADMIN') $articles = Article::all();
         else $articles = Article::where('user_id', Auth::user()->id)->get();
 
-
+        
         return view('admin.pages.article.index', ['articles' => $articles]);
     }
 

@@ -20,18 +20,24 @@ class UserSeeder extends Seeder
             'name' => 'Admin PPMIS',
             'username' => 'admin.ppmis',
             'role' => 'ADMIN',
+            'email' => 'ppmis@gmail.com',
+            'number' => '123457',
             'password' => Hash::make('itppmis'),
         ]);
         DB::table('users')->insert([
             'name' => 'Mabrur',
             'username' => 'mabrur.satori',
             'role' => 'USER',
+            'email' => 'mabrur@gmail.com',
+            'number' => '123457',
             'password' => Hash::make('mabrursatori'),
         ]);
         DB::table('users')->insert([
             'name' => 'Roichani',
             'username' => 'roichani',
             'role' => 'USER',
+            'email' => 'roikhani@gmail.com',
+            'number' => '123457',
             'password' => Hash::make('roichani'),
         ]);
     }
