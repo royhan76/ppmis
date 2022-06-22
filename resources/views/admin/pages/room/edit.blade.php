@@ -1,12 +1,12 @@
 @extends('admin.layout.admin')
 @section('title')
-    Admin | Category
+    Admin | Room
 @endsection
 @section('content')
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">Add Category</h4>
+                <h4 class="page-title">Add Room</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="#">
@@ -17,7 +17,7 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Category</a>
+                        <a href="#">Room</a>
                     </li>
                     <li class="separator">
                         <i class="flaticon-right-arrow"></i>
@@ -34,14 +34,14 @@
                         <div class="card-header">
                             <div>
                                 <a class="btn btn-primary btn-round ml-auto text-white"
-                                    href="{{ route('category.store') }}">
+                                    href="{{ route('room.store') }}">
                                     <i class="fa fa-arrow-left"></i>
                                     Back
                                 </a>
                             </div>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('category.update', $category->id) }}">
+                            <form method="POST" action="{{ route('room.update', $room->id) }}">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
@@ -52,12 +52,30 @@
                                         <div class="form-group {{ $errors->first('name') ? 'has-error' : '' }}">
                                             <label for="name">Name</label>
                                             <input type="text" name="name" class="form-control input-name" id="name"
-                                                placeholder="Name" value="{{ old('name') ?? $category->name }}">
+                                                placeholder="Name" value="{{ old('name') ?? $room->name }}">
                                             <small class="form-text text-danger">
                                                 {{ $errors->first('name') }}</small>
                                         </div>
                                         <div class="card-action d-flex justify-content-end">
                                             <button class="btn btn-success">Save</button>
+                                        </div>
+                                    </div>
+                                    {{-- DORMITORY --}}
+                                    <div class="col-md-6">
+                                        <div class="form-group {{ $errors->first('dormitory_id') ? 'has-error' : '' }}">
+                                            <label for="dormitory_id">Dormitory</label>
+                                            <select class="form-control" id="dormtiroy_id" name="dormitory_id">
+                                                <option value="">SELECT DORMITORY</option>
+                                                @foreach ($dormitories as $dormitory)
+                                                    <option
+                                                        {{ (old('dormitory_id') && old('dormitory_id') == $dormitory->id? 'selected': $room->dormitory_id == $dormitory->id)? 'selected': '' }}
+                                                        value="{{ $dormitory->id }}">{{ $dormitory->name }}</option>
+                                                @endforeach
+
+
+                                            </select>
+                                            <small class="form-text text-danger">
+                                                {{ $errors->first('dormitory_id') }}</small>
                                         </div>
                                     </div>
                                 </div>

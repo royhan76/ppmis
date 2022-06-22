@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Room;
 use App\Models\Dormitory;
+use Exception;
 
 class RoomController extends Controller
 {
@@ -72,7 +73,10 @@ class RoomController extends Controller
      */
     public function edit($id)
     {
-        //
+        $room = Room::find($id);
+        $dormitories = Dormitory::all();
+
+        return view('admin.pages.room.edit', ['room' => $room, 'dormitories' => $dormitories]);
     }
 
     /**
@@ -84,7 +88,16 @@ class RoomController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required',
+            'dormitory_id' => 'required',
+        ]);
+        $room = Room::find($id);
+        $room->name = $request->name;
+        $room->dormitory_id = $request->dormitory_id;
+        $room->save();
+
+        return redirect('admin/room')->with('status', 'Room Berhasil Ditambahkan!');
     }
 
     /**
@@ -95,6 +108,13 @@ class RoomController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $room = Room::find($id);
+        try{
+            $room->delete();
+
+            return redirect('admin/room')->with('status', 'Category Berhasil Dihapus!');
+        }catch(Exception $e){
+            return redirect('admin/room')->with('status', 'Category Gagal Dihapus!');
+        }
     }
 }
