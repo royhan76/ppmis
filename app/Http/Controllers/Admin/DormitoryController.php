@@ -40,7 +40,7 @@ class DormitoryController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $validated = $request->validate([
             'name' => 'required|unique:App\Models\Dormitory,name',
         ]);
@@ -105,11 +105,11 @@ class DormitoryController extends Controller
     public function destroy($id)
     {
         $dormitory = Dormitory::find($id);
-        try{
+        try {
             $dormitory->delete();
 
             return redirect('admin/dormitory')->with('status', 'Dormitory Berhasil Dihapus!');
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return redirect('admin/dormitory')->with('status', 'Dormitory Gagal Dihapus!');
         }
     }

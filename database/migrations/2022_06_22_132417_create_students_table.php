@@ -18,7 +18,7 @@ class CreateStudentsTable extends Migration
             $table->string('name');
             $table->string('nomor_induk_santri');
             $table->date('date_birth');
-            $table->longText('photo');
+            $table->longText('photo')->nullable();
             $table->longText('address');
             $table->string('arrival');
             $table->bigInteger('room_id')->unsigned();
@@ -32,7 +32,6 @@ class CreateStudentsTable extends Migration
             $table->bigInteger('grade_id')->unsigned();
             $table->foreign('grade_id')->references('id')->on('grades');
             $table->timestamps();
-
         });
     }
 
