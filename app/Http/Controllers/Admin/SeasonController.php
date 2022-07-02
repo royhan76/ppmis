@@ -40,6 +40,7 @@ class SeasonController extends Controller
      */
     public function store(Request $request)
     {
+        
         $validated = $request->validate([
             'year' => 'required|unique:App\Models\Season,year',
         ]);
@@ -47,7 +48,6 @@ class SeasonController extends Controller
         $season = Season::create([
             'year' => $request->year
         ]);
-
         return redirect('admin/season')->with('status', 'Tahun Ajaran Berhasil Ditambahkan!');
     }
 
@@ -70,8 +70,9 @@ class SeasonController extends Controller
      */
     public function edit($id)
     {
-        $season = Season::where('year', $id)->first();
-
+        
+        $season = Season::find($id);
+        
         return view('admin.pages.season.edit', ['season' => $season]);
     }
 
@@ -84,10 +85,10 @@ class SeasonController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $validated = $request->validate([
-            'year' => ['required', Rule::unique('year')->ignore($id)],
+            'year' => ['required'],
         ]);
-
         $season = Season::find($id);
         $season->year = $request->year;
         $season->save();

@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Bill;
 
 class BillController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,7 @@ class BillController extends Controller
      */
     public function index()
     {
-        //
+        $bills = Bill::all();
     }
 
     /**

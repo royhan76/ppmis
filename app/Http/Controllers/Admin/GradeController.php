@@ -94,7 +94,7 @@ class GradeController extends Controller
 
         $grade = Grade::find($id);
         $grade->name = $request->name;
-        $grade->number = $request->grade;
+        $grade->number = $request->number;
         $grade->save();
 
         return redirect('admin/grade')->with('status', 'Grade Berhasil Diupdate!');

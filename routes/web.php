@@ -12,6 +12,14 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\DormitoryController;
 use App\Http\Controllers\Admin\RoomController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\BillController;
+use App\Http\Controllers\Admin\FoulController;
+use App\Http\Controllers\Admin\GradeController;
+use App\Http\Controllers\Admin\SeasonController;
+use App\Http\Controllers\Admin\StudentBillController;
+use App\Http\Controllers\Admin\StudentController;
+use App\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +41,14 @@ Route::prefix('admin')
             'article' => ArticleController::class,
             'slideshow' => SlideshowController::class,
             'dormitory' => DormitoryController::class,
-            'room' => RoomController::class
+            'room' => RoomController::class,
+            'role' => RoleController::class,
+            'bill' => BillController::class,
+            'foul' => FoulController::class,
+            'grade' => GradeController::class,
+            'student' => StudentController::class,
+            'stuedent-bill' => StudentBillController::class,
+            'season' => SeasonController::class,
         ]);
         Route::resource('contact', ContactController::class)->only([
             'index', 'edit', 'update'

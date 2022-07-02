@@ -12,6 +12,8 @@ use Database\Seeders\CategorySeeder;
 use Database\Seeders\ArticleSeeder;
 use Database\Seeders\DormitorySeeder;
 use Database\Seeders\RoomSeeder;
+use Database\Seeders\RoleSeeder;
+use Database\Seeders\SeasonSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,14 +26,16 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
         $this->call([
-             UserSeeder::class,
-             ContactSeeder::class,
+            //  UserSeeder::class,
+            //  ContactSeeder::class,
             ProfileSeeder::class,
              SlideshowSeeder::class,
              CategorySeeder::class,
              ArticleSeeder::class,
              DormitorySeeder::class,
-             RoomSeeder::class
+             RoomSeeder::class,
+             RoleSeeder::class,
+             SeasonSeeder::class
         ]);
     }
 }

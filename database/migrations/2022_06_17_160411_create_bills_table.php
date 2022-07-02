@@ -19,6 +19,8 @@ class CreateBillsTable extends Migration
             $table->string('arrival');
             $table->bigInteger('year');
             $table->foreign('year')->references('year')->on('seasons');
+            $table->bigInteger('role_id')->unsigned();
+            $table->foreign('role_id')->references('id')->on('roles');
             $table->integer('nominal');
             $table->timestamps();
         });

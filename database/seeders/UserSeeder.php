@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
+            'id' => 1,
             'name' => 'Admin PPMIS',
             'username' => 'admin.ppmis',
             'role' => 'ADMIN',
@@ -25,6 +26,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('itppmis'),
         ]);
         DB::table('users')->insert([
+            'id' => 2,
             'name' => 'Mabrur',
             'username' => 'mabrur.satori',
             'role' => 'USER',
@@ -33,6 +35,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('mabrursatori'),
         ]);
         DB::table('users')->insert([
+            'id' => 3,
             'name' => 'Roichani',
             'username' => 'roichani',
             'role' => 'USER',

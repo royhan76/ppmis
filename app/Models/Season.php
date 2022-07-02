@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Season extends Model
 {
+    protected $fillable = ['year'];
     use HasFactory;
+
+    protected $primaryKey = 'year';
+    public $incrementing = false;
 }

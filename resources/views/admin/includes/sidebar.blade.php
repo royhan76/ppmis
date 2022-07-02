@@ -45,12 +45,12 @@
 									</li>
                                     @endif
 
-									<li>
+									{{-- <li>
 										<a href="{{ route('profile.index') }}">
 											<span class="sub-item">Profile</span>
 										</a>
-									</li>
-									<li>
+									</li> --}}
+									{{-- <li>
 										<a href="{{ route('category.index') }}">
 											<span class="sub-item">Category</span>
 										</a>
@@ -64,10 +64,35 @@
 										<a href="{{ route('contact.index') }}">
 											<span class="sub-item">Contact</span>
 										</a>
-									</li>
+									</li> --}}
 									<li>
 										<a href="{{ route('dormitory.index') }}">
 											<span class="sub-item">Komplek</span>
+										</a>
+									</li>
+									<li>
+										<a href="{{ route('room.index') }}">
+											<span class="sub-item">Kamar</span>
+										</a>
+									</li>
+									<li>
+										<a href="{{ route('role.index') }}">
+											<span class="sub-item">Status</span>
+										</a>
+									</li>
+									<li>
+										<a href="{{ route('season.index') }}">
+											<span class="sub-item">Tahun Ajaran</span>
+										</a>
+									</li>
+									<li>
+										<a href="{{ route('grade.index') }}">
+											<span class="sub-item">Kelas</span>
+										</a>
+									</li>
+									<li>
+										<a href="{{ route('bill.index') }}">
+											<span class="sub-item">Tagihan</span>
 										</a>
 									</li>
 								</ul>
