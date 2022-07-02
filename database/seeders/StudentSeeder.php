@@ -22,6 +22,7 @@ class StudentSeeder extends Seeder
             'nomor_induk_santri' => '1234567',
             'date_birth' => Carbon::now(),
             'photo' => Str::random(100),
+            'arrival' => 'LAMA',
             'address' => 'Perbutulan Sumber Cirebon',
             'room_id' => 1,
             'role_id' => 2,

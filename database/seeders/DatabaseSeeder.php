@@ -14,6 +14,7 @@ use Database\Seeders\DormitorySeeder;
 use Database\Seeders\RoomSeeder;
 use Database\Seeders\RoleSeeder;
 use Database\Seeders\SeasonSeeder;
+use Database\Seeders\GradeSeeder;
 use Database\Seeders\BillSeeder;
 use Database\Seeders\StudentSeeder;
 use Database\Seeders\StudentBillSeeder;
@@ -41,6 +42,7 @@ class DatabaseSeeder extends Seeder
              RoleSeeder::class,
              SeasonSeeder::class,
              BillSeeder::class,
+             GradeSeeder::class,
              StudentSeeder::class,
             StudentBillSeeder::class,
             FoulSeeder::class

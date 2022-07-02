@@ -15,7 +15,7 @@ class StudentBillSeeder extends Seeder
     public function run()
     {
         DB::table('student_bills')->insert([
-            'student_id' => 2,
+            'student_id' => 1,
             'bill_id' => 2,
             'year' => 2022,
             'status' => 0

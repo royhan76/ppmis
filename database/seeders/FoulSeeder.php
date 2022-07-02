@@ -16,7 +16,7 @@ class FoulSeeder extends Seeder
     public function run()
     {
         DB::table('fouls')->insert([
-            'student_id' => 2,
+            'student_id' => 1,
             'name' => 'Mblorot Jam Ke-2',
             'date' => Carbon::now()
         ]);
