@@ -15,6 +15,7 @@ class BillSeeder extends Seeder
     public function run()
     {
         DB::table('bills')->insert([
+            'id' => 1,
             'name' => 'Daftar Ulang Santri Ndalem',
             'arrival' => 'LAMA',
             'year' => 2022,
@@ -22,6 +23,7 @@ class BillSeeder extends Seeder
             'role_id' => 1
         ]);
         DB::table('bills')->insert([
+            'id' => 2,
             'name' => 'Daftar Ulang Santri Non-Ndalem Lama',
             'arrival' => 'LAMA',
             'year' => 2022,
@@ -29,6 +31,7 @@ class BillSeeder extends Seeder
             'role_id' => 2
         ]);
         DB::table('bills')->insert([
+            'id' => 3,
             'name' => 'Daftar Ulang Santri Non-Ndalem Baru',
             'arrival' => 'BARU',
             'year' => 2022,

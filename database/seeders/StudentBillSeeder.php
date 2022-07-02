@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class StudentBillSeeder extends Seeder
 {
@@ -13,6 +14,11 @@ class StudentBillSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('student_bills')->insert([
+            'student_id' => 2,
+            'bill_id' => 2,
+            'year' => 2022,
+            'status' => 0
+        ]);
     }
 }

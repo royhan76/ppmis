@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Slideshow;
+
 use Illuminate\Database\Seeder;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\ContactSeeder;
@@ -14,6 +14,10 @@ use Database\Seeders\DormitorySeeder;
 use Database\Seeders\RoomSeeder;
 use Database\Seeders\RoleSeeder;
 use Database\Seeders\SeasonSeeder;
+use Database\Seeders\BillSeeder;
+use Database\Seeders\StudentSeeder;
+use Database\Seeders\StudentBillSeeder;
+use Database\Seeders\FoulSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -26,8 +30,8 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
         $this->call([
-            //  UserSeeder::class,
-            //  ContactSeeder::class,
+            UserSeeder::class,
+            ContactSeeder::class,
             ProfileSeeder::class,
              SlideshowSeeder::class,
              CategorySeeder::class,
@@ -35,7 +39,11 @@ class DatabaseSeeder extends Seeder
              DormitorySeeder::class,
              RoomSeeder::class,
              RoleSeeder::class,
-             SeasonSeeder::class
+             SeasonSeeder::class,
+             BillSeeder::class,
+             StudentSeeder::class,
+            StudentBillSeeder::class,
+            FoulSeeder::class
         ]);
     }
 }
