@@ -1,12 +1,12 @@
 @extends('admin.layout.admin')
 @section('title')
-    Admin | Dormitories
+    Admin | Bills
 @endsection
 @section('content')
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">Dormitories</h4>
+                <h4 class="page-title">Bills</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="#">
@@ -17,7 +17,7 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Dormitories</a>
+                        <a href="#">Bills</a>
 
 
                     </li>
@@ -29,9 +29,9 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <a class="btn btn-primary btn-round ml-auto text-white" href="dormitory/create">
+                                <a class="btn btn-primary btn-round ml-auto text-white" href="bill/create">
                                     <i class="fa fa-plus"></i>
-                                    Add dormitory
+                                    Add bill
                                 </a>
                             </div>
                         </div>
@@ -43,16 +43,19 @@
                                     <thead>
                                         <tr>
                                             <th>Name</th>
+                                            <th>Arrival</th>
+                                            <th>Season</th>
+                                            <th>Name</th>
                                             <th style="width: 10%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse ($dormitories as $dormitory)
+                                        @forelse ($bills as $bill)
                                             <tr>
-                                                <td>{{ $dormitory->name }}</td>
+                                                <td>{{ $bill->name }}</td>
                                                 <td>
                                                     <div class="form-button-action">
-                                                        <a href="{{ route('dormitory.edit', $dormitory->id) }}"
+                                                        <a href="{{ route('bill.edit', $bill->id) }}"
                                                             type="button" data-toggle="tooltip"
                                                             class="btn btn-link btn-primary btn-lg button-edit"
                                                             data-original-title="Edit Task">
@@ -60,7 +63,7 @@
                                                         </a>
                                                         <form class="form-delete" method="POST"
                                                             onsubmit="return confirm('Apa kamu yakin?')"
-                                                            action="{{ route('dormitory.destroy', [$dormitory->id]) }}">
+                                                            action="{{ route('bill.destroy', [$bill->id]) }}">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" data-toggle="tooltip"
@@ -73,7 +76,7 @@
                                                 </td>
                                             </tr>
                                         @empty
-                                            <p>No dormitories</p>
+                                            <p>No bills</p>
                                         @endforelse
 
                                     </tbody>
