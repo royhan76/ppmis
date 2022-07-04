@@ -54,7 +54,7 @@ class ApiController extends Controller
 
         //Send failed response if request is not valid
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 200);
+            return response()->json(['error' => $validator->messages()], 401);
         }
 
         //Request is validated
@@ -73,11 +73,13 @@ class ApiController extends Controller
                 	'message' => 'Could not create token.',
                 ], 500);
         }
- 	
+ 	    $user = User::where('email', $request->email)->first();
+        $user->students = $user->students;
  		//Token created, return with success response and jwt token
         return response()->json([
             'success' => true,
             'token' => $token,
+            'data' => $user
         ]);
     }
  

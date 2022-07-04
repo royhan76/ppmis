@@ -20,6 +20,13 @@ class StudentController extends Controller
 
     public function index()
     {
-        return $this->user;
+        $user = $this->user;
+        $user->students = $this->students();
+        return response()->json([
+            'success' => true,
+            'data' => $user
+        ], Response::HTTP_OK);
     }
+
+    
 }

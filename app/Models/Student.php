@@ -12,26 +12,43 @@ use App\Models\Room;
 
 class Student extends Model
 {
+
+    use HasFactory;
+
     protected $fillable = [
         'name',
         'nomor_induk_santri',
         'date_birth',
-        'image',
         'address',
         'arrival',
+        'year',
+    ];
+    
+
+    protected $appends = ['image_url', 'room', 'dormitory'];
+
+    protected $hidden = [
+        'user_id',
+        'grade_id',
         'room_id',
         'role_id',
-        'year',
-        'user_id',
-        'grade_id'
+        'image',
     ];
-    protected $appends = ['image_url'];
+    
     public function getImageUrlAttribute($value)
     {
         $url = 'https://' . env('AWS_BUCKET') . '.s3-' . env('AWS_DEFAULT_REGION') . '.amazonaws.com/ppmis/images/student/';
         return $url . $this->image;
     }
-    use HasFactory;
+
+    public function getRoomAttribute($value){
+        return  Room::find($this->room_id)->name;
+    }
+
+    public function getDormitoryAttribute($value){
+        return  Room::find($this->room_id)->dormitory->name;
+    }
+    
 
     public function role()
     {
