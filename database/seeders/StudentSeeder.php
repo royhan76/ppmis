@@ -21,7 +21,7 @@ class StudentSeeder extends Seeder
             'name' => 'Mabrur',
             'nomor_induk_santri' => '1234567',
             'date_birth' => Carbon::now(),
-            'image' => Str::random(100),
+            'image' => '',
             'arrival' => 'LAMA',
             'address' => 'Perbutulan Sumber Cirebon',
             'room_id' => 1,

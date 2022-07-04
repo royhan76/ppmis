@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bill;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\Room;
@@ -10,6 +11,7 @@ use App\Models\Role;
 use App\Models\Season;
 use App\Models\User;
 use App\Models\Grade;
+use App\Models\StudentBill;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,7 +25,6 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::all();
-
         return view('admin.pages.student.index', ['students' => $students]);
     }
 
@@ -93,6 +94,22 @@ class StudentController extends Controller
             'user_id' => $request->user,
             'grade_id' => $request->grade,
         ]);
+        $bills = Bill::where('arrival', $student->arrival)
+                            ->where('year', $student->year)
+                            ->where('role_id', $student->role_id)
+                            ->get();
+
+        foreach($bills as $item){
+            $student_bill = StudentBill::where('student_id', $student->id)
+                                        ->where('bill_id', $item->id)
+                                        ->first();
+            if(!$student_bill) {
+                $new_student_bill = StudentBill::create([
+                    'student_id' => $student->id,
+                    'bill_id' => $item->id
+                ]);
+            }
+        }
 
         return redirect('admin/student')->with('status', 'Santri berhasil ditambahkan');
     }
@@ -176,6 +193,25 @@ class StudentController extends Controller
         $student->user_id = $request->user;
         $student->grade_id = $request->grade;
         $student->save();
+
+
+        $bills = Bill::where('arrival', $student->arrival)
+                            ->where('year', $student->year)
+                            ->where('role_id', $student->role_id)
+                            ->get();
+        
+        foreach($bills as $item){
+            $student_bill = StudentBill::where('student_id', $student->id)
+                                        ->where('bill_id', $item->id)
+                                        ->first();
+            if(!$student_bill) {
+                $new_student_bill = StudentBill::create([
+                    'student_id' => $student->id,
+                    'bill_id' => $item->id
+                ]);
+            }
+        }
+
         return redirect('admin/student')->with('status', 'Santri berhasil diupdate');
     }
 
