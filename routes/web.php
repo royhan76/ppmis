@@ -47,7 +47,7 @@ Route::prefix('admin')
             'foul' => FoulController::class,
             'grade' => GradeController::class,
             'student' => StudentController::class,
-            'stuedent-bill' => StudentBillController::class,
+            'student-bill' => StudentBillController::class,
             'season' => SeasonController::class,
         ]);
         Route::resource('contact', ContactController::class)->only([

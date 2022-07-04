@@ -12,17 +12,25 @@ use App\Models\Room;
 
 class Student extends Model
 {
-    protected $fillable = ['name', 
-                            'nomor_induk_santri', 
-                            'date_birth', 
-                            'photo', 
-                            'address',
-                            'arrival',
-                            'room_id',
-                            'role_id',
-                            'year',
-                            'user_id',
-                            'grade_id']; 
+    protected $fillable = [
+        'name',
+        'nomor_induk_santri',
+        'date_birth',
+        'image',
+        'address',
+        'arrival',
+        'room_id',
+        'role_id',
+        'year',
+        'user_id',
+        'grade_id'
+    ];
+    protected $appends = ['image_url'];
+    public function getImageUrlAttribute($value)
+    {
+        $url = 'https://' . env('AWS_BUCKET') . '.s3-' . env('AWS_DEFAULT_REGION') . '.amazonaws.com/ppmis/images/student/';
+        return $url . $this->image;
+    }
     use HasFactory;
 
     public function role()

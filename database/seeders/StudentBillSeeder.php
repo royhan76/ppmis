@@ -17,7 +17,6 @@ class StudentBillSeeder extends Seeder
         DB::table('student_bills')->insert([
             'student_id' => 1,
             'bill_id' => 2,
-            'year' => 2022,
             'status' => 0
         ]);
     }

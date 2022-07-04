@@ -43,9 +43,10 @@
                                     <thead>
                                         <tr>
                                             <th>Name</th>
-                                            <th>Arrival</th>
-                                            <th>Season</th>
-                                            <th>Name</th>
+                                            <th>Baru/Lama</th>
+                                            <th>Tahun Ajaran</th>
+                                            <th>Status</th>
+                                            <th>Nominal</th>
                                             <th style="width: 10%">Action</th>
                                         </tr>
                                     </thead>
@@ -53,10 +54,14 @@
                                         @forelse ($bills as $bill)
                                             <tr>
                                                 <td>{{ $bill->name }}</td>
+                                                <td>{{ $bill->arrival }}</td>
+                                                <td>{{ $bill->year }}</td>
+                                                <td>{{ $bill->role->name }}</td>
+                                                <td>{{ $bill->nominal }}</td>
                                                 <td>
                                                     <div class="form-button-action">
-                                                        <a href="{{ route('bill.edit', $bill->id) }}"
-                                                            type="button" data-toggle="tooltip"
+                                                        <a href="{{ route('bill.edit', $bill->id) }}" type="button"
+                                                            data-toggle="tooltip"
                                                             class="btn btn-link btn-primary btn-lg button-edit"
                                                             data-original-title="Edit Task">
                                                             <i class="fa fa-edit"></i>
@@ -92,55 +97,57 @@
     </div>
 @endsection
 @push('script-push')
-<script>
-    $(document).ready(function() {
-                var status = {{ Illuminate\Support\Js::from(session('status')) }};
-                if (status) {
-                    showAlert("Success!", status, "success");
-                }
+    <script>
+        $(document).ready(function() {
+            var status = {{ Illuminate\Support\Js::from(session('status')) }};
+            if (status) {
+                showAlert("Success!", status, "success");
+            }
 
-                function showAlert(status, message, type) {
-                    swal(status, message, {
-                        icon: type,
-                        buttons: {
-                            confirm: {
-                                className: 'btn btn-' + type
-                            }
-                        },
-                    });
-                }
+            function showAlert(status, message, type) {
+                swal(status, message, {
+                    icon: type,
+                    buttons: {
+                        confirm: {
+                            className: 'btn btn-' + type
+                        }
+                    },
+                });
+            }
 
-                $('#basic-datatables').DataTable({
-                    });
+            $('#basic-datatables').DataTable({});
 
-                    $('#multi-filter-select').DataTable( {
-                    "pageLength": 5,
-                    initComplete: function () {
-                        this.api().columns().every( function () {
-                            var column = this;
-                            var select = $('<select class="form-control"><option value=""></option></select>')
-                            .appendTo( $(column.footer()).empty() )
-                            .on( 'change', function () {
+            $('#multi-filter-select').DataTable({
+                "pageLength": 5,
+                initComplete: function() {
+                    this.api().columns().every(function() {
+                        var column = this;
+                        var select = $(
+                                '<select class="form-control"><option value=""></option></select>'
+                            )
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function() {
                                 var val = $.fn.dataTable.util.escapeRegex(
                                     $(this).val()
-                                    );
+                                );
 
                                 column
-                                .search( val ? '^'+val+'$' : '', true, false )
-                                .draw();
-                            } );
+                                    .search(val ? '^' + val + '$' : '', true, false)
+                                    .draw();
+                            });
 
-                            column.data().unique().sort().each( function ( d, j ) {
-                                select.append( '<option value="'+d+'">'+d+'</option>' )
-                            } );
-                        } );
-                    }
-                });
+                        column.data().unique().sort().each(function(d, j) {
+                            select.append('<option value="' + d + '">' + d +
+                                '</option>')
+                        });
+                    });
+                }
+            });
 
-                $('#add-row').DataTable({
-                    "pageLength": 5,
-                });
+            $('#add-row').DataTable({
+                "pageLength": 5,
+            });
 
-                });
-</script>
+        });
+    </script>
 @endpush

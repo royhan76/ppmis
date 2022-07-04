@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Bill;
 use App\Models\Role;
+use App\Models\Season;
 use Illuminate\Validation\Rule;
 use Exception;
 
@@ -31,7 +32,8 @@ class BillController extends Controller
     public function create()
     {
         $roles = Role::all();
-        return view('admin.pages.bill.create', ['roles' => $roles]);
+        $seasons = Season::all();
+        return view('admin.pages.bill.create', ['roles' => $roles, 'seasons' => $seasons]);
     }
 
     /**
@@ -82,8 +84,9 @@ class BillController extends Controller
     {
         $bill = Bill::find($id);
         $roles = Role::all();
+        $seasons = Season::all();
 
-        return view('admin.pages.article.edit', ['bill' => $bill, 'roles' => $roles]);
+        return view('admin.pages.bill.edit', ['bill' => $bill, 'roles' => $roles, 'seasons' => $seasons]);
     }
 
     /**
@@ -105,6 +108,10 @@ class BillController extends Controller
 
         $bill = Bill::find($id);
         $bill->name = $request->name;
+        $bill->arrival = $request->arrival;
+        $bill->year = $request->year;
+        $bill->role_id= $request->role;
+        $bill->nominal = $request->nominal;
 
         $bill->save();
 
@@ -120,11 +127,11 @@ class BillController extends Controller
     public function destroy($id)
     {
         $category = Bill::find($id);
-        try{
+        try {
             $category->delete();
 
             return redirect('admin/bill')->with('status', 'Tagihan Berhasil Dihapus!');
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return redirect('admin/bill')->with('status', 'Tagihan Gagal Dihapus!');
         }
     }

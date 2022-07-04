@@ -8,6 +8,7 @@ use App\Models\Student;
 use App\Models\Bill;
 use App\Models\Season;
 use App\Models\StudentBill;
+use Exception;
 
 class StudentBillController extends Controller
 {
@@ -18,8 +19,8 @@ class StudentBillController extends Controller
      */
     public function index()
     {
-        $student_bill = StudentBill::all();
-        return view('admin.pages.student_bill.index', ['student_bill' => $student_bill]);
+        $student_bills = StudentBill::all();
+        return view('admin.pages.student_bill.index', ['student_bills' => $student_bills]);
     }
 
     /**
@@ -31,11 +32,10 @@ class StudentBillController extends Controller
     {
         $students = Student::all();
         $bills = Bill::all();
-        $seasons = Season::all();
-        return view('admin.pages.student_bill.create', ['students' => $students,
-                                                        'bills' => $bills,
-                                                        'season' => $seasons]);
-
+        return view('admin.pages.student_bill.create', [
+            'students' => $students,
+            'bills' => $bills
+        ]);
     }
 
     /**
@@ -49,17 +49,16 @@ class StudentBillController extends Controller
         $validated = $request->validate([
             'student' => 'required',
             'bill' => 'required',
-            'year' => 'required'
+            'status' => 'required'
         ]);
 
         $student_bill = StudentBill::create([
             'student_id' => $request->student,
             'bill_id' => $request->bill,
-            'year' => $request->year
+            'status' => $request->status
         ]);
 
-        return redirect('admin/student_bill')->with('status', 'Tagihan santri Berhasil Ditambahkan!');
-
+        return redirect('admin/student-bill')->with('status', 'Tagihan santri Berhasil Ditambahkan!');
     }
 
     /**
@@ -84,12 +83,14 @@ class StudentBillController extends Controller
         $student_bill = StudentBill::find($id);
         $students = Student::all();
         $bills = Bill::all();
-        $seasons = Season::all();
 
-        return view('admin.pages.student_bill.edit', ['students' => $students,
-                                                        'bills' => $bills,
-                                                        'season' => $seasons,
-                                                        'student_bill' => $student_bill]);
+        return view('admin.pages.student_bill.edit', [
+            'students' => $students,
+            'bills' => $bills,
+            'student_bill' => $student_bill
+        ]);
+
+        return redirect('admin/student-bill')->with('status', 'Tagihan santri Berhasil Ditambahkan!');
     }
 
     /**
@@ -104,9 +105,16 @@ class StudentBillController extends Controller
         $validated = $request->validate([
             'student' => 'required',
             'bill' => 'required',
-            'year' => 'required',
             'status' => 'required'
         ]);
+
+        $student_bill = StudentBill::find($id);
+        $student_bill->student_id = $request->student;
+        $student_bill->bill_id = $request->bill;
+        $student_bill->status = $request->status;
+        $student_bill->save();
+
+        return redirect('admin/student-bill')->with('status', 'Tagihan santri Berhasil Diupdate!');
     }
 
     /**
@@ -118,7 +126,11 @@ class StudentBillController extends Controller
     public function destroy($id)
     {
         $student_bill = StudentBill::find($id);
-        $student_bill->delete();
-        return redirect('admin/student_bill')->with('status', 'Tagihan santri berhasil dihapus');
+        try {
+            $student_bill->delete();
+            return redirect('admin/student_bill')->with('status', 'Tagihan santri berhasil dihapus');
+        } catch (Exception $e) {
+            return redirect('admin/student_bill')->with('status', 'Tagihan santri gagal dihapus');
+        }
     }
 }

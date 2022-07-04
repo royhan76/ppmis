@@ -9,7 +9,7 @@ use App\Models\Bill;
 
 class StudentBill extends Model
 {
-    protected $fillable = ['student_id', 'bill_id', 'year', 'status']; 
+    protected $fillable = ['student_id', 'bill_id', 'status'];
     use HasFactory;
 
     protected $table = 'student_bills';

@@ -18,7 +18,7 @@ class CreateStudentsTable extends Migration
             $table->string('name');
             $table->string('nomor_induk_santri');
             $table->date('date_birth');
-            $table->longText('photo')->nullable();
+            $table->longText('image')->nullable();
             $table->longText('address');
             $table->string('arrival');
             $table->bigInteger('room_id')->unsigned();

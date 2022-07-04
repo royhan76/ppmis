@@ -40,11 +40,13 @@ class StudentController extends Controller
         $users = User::all();
         $grades = Grade::all();
 
-        return view('admin.pages.student.create', ['roles' => $roles,
-                                                    'rooms' => $rooms,
-                                                    'seasons' => $seasons,
-                                                    'users' => $users,
-                                                    'grades' => $grades]);
+        return view('admin.pages.student.create', [
+            'roles' => $roles,
+            'rooms' => $rooms,
+            'seasons' => $seasons,
+            'users' => $users,
+            'grades' => $grades
+        ]);
     }
 
     /**
@@ -103,7 +105,6 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        
     }
 
     /**
@@ -120,13 +121,14 @@ class StudentController extends Controller
         $users = User::all();
         $grades = Grade::all();
         $student = Student::find($id);
-
-        return view('admin.pages.student.create', ['roles' => $roles,
-                                                    'rooms' => $rooms,
-                                                    'seasons' => $seasons,
-                                                    'users' => $users,
-                                                    'grades' => $grades,
-                                                    'student' => $student]);
+        return view('admin.pages.student.edit', [
+            'roles' => $roles,
+            'rooms' => $rooms,
+            'seasons' => $seasons,
+            'users' => $users,
+            'grades' => $grades,
+            'student' => $student
+        ]);
     }
 
     /**
@@ -150,7 +152,7 @@ class StudentController extends Controller
             'user' => 'required',
             'grade' => 'required',
         ]);
-
+        $student =  Student::find($id);
         $filename = '';
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -159,10 +161,10 @@ class StudentController extends Controller
 
             Storage::disk('s3')->put('ppmis/images/student/' . $filename, file_get_contents($file));
 
-            Storage::disk('s3')->delete('ppmis/images/student/' . $request->oldimage);
+            if ($student->image != '') Storage::disk('s3')->delete('ppmis/images/student/' . $request->oldimage);
         }
 
-        $student =  Student::find($id);
+
         if ($filename != '') $student->image = $filename;
         $student->nomor_induk_santri = $request->nomor_induk_santri;
         $student->date_birth = $request->date_birth;
@@ -174,7 +176,7 @@ class StudentController extends Controller
         $student->user_id = $request->user;
         $student->grade_id = $request->grade;
         $student->save();
-        return redirect('admin/article')->with('status', 'Article berhasil diupdate');
+        return redirect('admin/student')->with('status', 'Santri berhasil diupdate');
     }
 
     /**
@@ -186,13 +188,12 @@ class StudentController extends Controller
     public function destroy($id)
     {
         $student = Student::find($id);
-        try{
+        try {
             $student->delete();
-            Storage::disk('s3')->delete('ppmis/images/student/' . $student->image);
+            if ($student->image != '')  Storage::disk('s3')->delete('ppmis/images/student/' . $student->image);
             return redirect('admin/student')->with('status', 'Santri berhasil dihapus');
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return redirect('admin/student')->with('status', 'Santri gagal dihapus');
         }
-        
     }
 }
