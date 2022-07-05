@@ -25,7 +25,12 @@ class Student extends Model
     ];
     
 
-    protected $appends = ['image_url', 'room', 'dormitory'];
+    protected $appends = [
+        'image_url', 
+        'room_name', 
+        'dormitory_name',
+        'grade_name',
+        'role_name'];
 
     protected $hidden = [
         'user_id',
@@ -41,14 +46,21 @@ class Student extends Model
         return $url . $this->image;
     }
 
-    public function getRoomAttribute($value){
+    public function getRoomNameAttribute($value){
         return  Room::find($this->room_id)->name;
     }
 
-    public function getDormitoryAttribute($value){
+    public function getDormitoryNameAttribute($value){
         return  Room::find($this->room_id)->dormitory->name;
     }
     
+    public function getGradeNameAttribute($value){
+        return  Grade::find($this->grade_id)->name;
+    }
+
+    public function getRoleNameAttribute($value){
+        return  Role::find($this->role_id)->name;
+    }
 
     public function role()
     {

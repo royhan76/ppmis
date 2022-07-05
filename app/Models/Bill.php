@@ -9,6 +9,12 @@ use App\Models\Role;
 class Bill extends Model
 {
     protected $fillable = ['name', 'arrival', 'year', 'nominal', 'role_id'];
+    protected $hidden = ['role_id'];
+    protected $appends = ['role_name'];
+
+    public function getRoleNameAttribute($value){
+        return Role::find($this->role_id)->name;
+    }
     use HasFactory;
 
     public function role()

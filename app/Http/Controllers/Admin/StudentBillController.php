@@ -128,9 +128,9 @@ class StudentBillController extends Controller
         $student_bill = StudentBill::find($id);
         try {
             $student_bill->delete();
-            return redirect('admin/student_bill')->with('status', 'Tagihan santri berhasil dihapus');
+            return redirect('admin/student-bill')->with('status', 'Tagihan santri berhasil dihapus');
         } catch (Exception $e) {
-            return redirect('admin/student_bill')->with('status', 'Tagihan santri gagal dihapus');
+            return redirect('admin/student-bill')->with('status', 'Tagihan santri gagal dihapus');
         }
     }
 }

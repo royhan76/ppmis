@@ -204,12 +204,15 @@ class StudentController extends Controller
             $student_bill = StudentBill::where('student_id', $student->id)
                                         ->where('bill_id', $item->id)
                                         ->first();
+            
             if(!$student_bill) {
+                
                 $new_student_bill = StudentBill::create([
-                    'student_id' => $student->id,
+                    'student_id' => $id,
                     'bill_id' => $item->id
                 ]);
             }
+
         }
 
         return redirect('admin/student')->with('status', 'Santri berhasil diupdate');

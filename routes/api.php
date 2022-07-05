@@ -22,9 +22,10 @@ Route::post('login', [ApiController::class, 'authenticate']);
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('logout', [ApiController::class, 'logout']);
     Route::get('get_user', [ApiController::class, 'get_user']);
-    Route::post('/student/{id}', function ($id) {
-        return 'User '.$id;
-    });
+    
+    Route::get('/student/{id}', [StudentController::class, 'getStudent']);
+    Route::get('/student-bill/{id}', [StudentController::class, 'getStudentBill']);
+    Route::get('/student-foul/{id}', [StudentController::class, 'getStudentFoul']);
     Route::get('test', [StudentController::class, 'index']);
 
 });

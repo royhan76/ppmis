@@ -70,7 +70,7 @@
                                                 </td>
                                                 <td>{{ $student->address }}</td>
                                                 <td>{{ $student->arrival }}</td>
-                                                <td>{{ $student->room->name }}</td>
+                                                <td>{{ $student->room->name}}</td>
                                                 <td>{{ $student->role->name }}</td>
                                                 <td>{{ $student->year }}</td>
                                                 <td>{{ $student->user->name }}</td>
