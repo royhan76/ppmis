@@ -128,8 +128,9 @@ class GradeController extends Controller
      */
     public function destroy($id)
     {
-        $grade = Grade::find($id);
+
         try {
+            $grade = Grade::find($id);
             $grade->delete();
 
             return response()->json([
