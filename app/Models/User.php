@@ -29,7 +29,11 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'password', 'role', 'email', 'image', 'students'
+        'name', 'username', 'password', 'role', 'email', 'students'
+    ];
+
+    protected $appends = [
+        'image_url'
     ];
 
     /**
@@ -38,7 +42,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', "image"
     ];
 
     /**
@@ -50,7 +54,12 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    
+    public function getImageUrlAttribute($value)
+    {
+        if(!$this->image) return null;
+        $url = 'https://' . env('AWS_BUCKET') . '.s3-' . env('AWS_DEFAULT_REGION') . '.amazonaws.com/ppmis/images/user/';
+        return $url . $this->image;
+    }
 
     public function getJWTIdentifier()
     {
