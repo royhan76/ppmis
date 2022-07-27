@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -56,12 +57,21 @@ class UserController extends Controller
             'password' => 'required|min:6',
             'repassword' => 'required|same:password'
         ]);
+        $filename = '';
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+
+            $filename = random_int(1000, 9999) . '-' . time() . '.' . $file->getClientOriginalExtension();
+
+            Storage::disk('s3')->put('ppmis/images/user/' . $filename, file_get_contents($file));
+        }
 
         $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
             'password' => Hash::make($request->password),
-            'role' => 'USER'
+            'role' => 'USER',
+            'image' => $filename
         ]);
 
         return redirect('admin/user')->with('status', 'User Berhasil Ditambahkan!');
@@ -112,6 +122,18 @@ class UserController extends Controller
         ]);
 
         $user = User::find($id);
+        $filename = '';
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+
+            $filename = random_int(1000, 9999) . '-' . time() . '.' . $file->getClientOriginalExtension();
+
+            Storage::disk('s3')->put('ppmis/images/user/' . $filename, file_get_contents($file));
+
+            if ($user->image != '') Storage::disk('s3')->delete('ppmis/images/user/' . $user->image);
+        }
+
+        $user->image =  $filename;
         $user->username =  $request->username;
         $user->name = $request->name;
         $user->password = ($request->password != null) ? Hash::make($request->password) : $request->old_password;

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dormitory;
 use Illuminate\Http\Request;
 use App\Models\Foul;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +19,11 @@ class FoulController extends Controller
      */
     public function index()
     {
-        //
+        $fouls = Foul::all();
+        return response()->json([
+            'success' => true,
+            'data' => $fouls
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -39,7 +44,25 @@ class FoulController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->only('name', 'number', 'date');
+        $validator = Validator::make($data, [
+            'name' => 'required',
+            'student' => 'required',
+            'date' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->messages()], 500);
+        }
+        $foul = Foul::create([
+            'name' => $request->name,
+            'student_id' => $request->student,
+            'date' => $request->date,
+        ]);
+        return response()->json([
+            'success' => true,
+            'data' => $foul
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -73,7 +96,28 @@ class FoulController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->only('name', 'number', 'date');
+        $validator = Validator::make($data, [
+            'name' => 'required',
+            'student' => 'required',
+            'date' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->messages()], 500);
+        }
+
+
+        $foul = Foul::find($id);
+        $foul->name = $request->name;
+        $foul->student_id = $request->student;
+        $foul->date = $request->date;
+        $foul->save();
+
+        return response()->json([
+            'success' => true,
+            'data' => $foul
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -84,6 +128,17 @@ class FoulController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $foul = Foul::find($id);
+            $foul->delete();
+
+            return response()->json([
+                'success' => true
+            ], Response::HTTP_OK);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

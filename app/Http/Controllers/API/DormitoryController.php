@@ -18,7 +18,11 @@ class DormitoryController extends Controller
      */
     public function index()
     {
-        //
+        $dormitories = Dormitory::all();
+        return response()->json([
+            'success' => true,
+            'data' => $dormitories
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -39,7 +43,21 @@ class DormitoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->only('name');
+        $validator = Validator::make($data, [
+            'name' => 'required|string|unique:grades',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->messages()], 500);
+        }
+        $dormitory = Dormitory::create([
+            'name' => $request->name,
+        ]);
+        return response()->json([
+            'success' => true,
+            'data' => $dormitory
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -50,7 +68,11 @@ class DormitoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $dormitory = Dormitory::find($id);
+        return response()->json([
+            'success' => true,
+            'data' => $dormitory
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -73,7 +95,24 @@ class DormitoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->only('name');
+        $validator = Validator::make($data, [
+            'name' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->messages()], 500);
+        }
+
+
+        $dormitory = Dormitory::find($id);
+        $dormitory->name = $request->name;
+        $dormitory->save();
+
+        return response()->json([
+            'success' => true,
+            'data' => $dormitory
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -84,6 +123,17 @@ class DormitoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $dormitory = Dormitory::find($id);
+            $dormitory->delete();
+
+            return response()->json([
+                'success' => true
+            ], Response::HTTP_OK);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

@@ -23,14 +23,17 @@ class Student extends Model
         'arrival',
         'year',
     ];
-    
+
 
     protected $appends = [
-        'image_url', 
-        'room_name', 
+        'image_url',
+        'room_name',
         'dormitory_name',
         'grade_name',
-        'role_name'];
+        'role_name',
+        'fouls',
+        'bills'
+    ];
 
     protected $hidden = [
         'user_id',
@@ -39,26 +42,43 @@ class Student extends Model
         'role_id',
         'image',
     ];
-    
+
+
+
+    public function getBillsAttribute($value)
+    {
+        return StudentBill::where(['student_id' =>  $this->id])->get();
+    }
+
+    public function getFoulsAttribute($value)
+    {
+        return Foul::where('student_id', $this->id)->get();
+    }
+
     public function getImageUrlAttribute($value)
     {
+        if (!$this->image) return null;
         $url = 'https://' . env('AWS_BUCKET') . '.s3-' . env('AWS_DEFAULT_REGION') . '.amazonaws.com/ppmis/images/student/';
         return $url . $this->image;
     }
 
-    public function getRoomNameAttribute($value){
+    public function getRoomNameAttribute($value)
+    {
         return  Room::find($this->room_id)->name;
     }
 
-    public function getDormitoryNameAttribute($value){
+    public function getDormitoryNameAttribute($value)
+    {
         return  Room::find($this->room_id)->dormitory->name;
     }
-    
-    public function getGradeNameAttribute($value){
+
+    public function getGradeNameAttribute($value)
+    {
         return  Grade::find($this->grade_id)->name;
     }
 
-    public function getRoleNameAttribute($value){
+    public function getRoleNameAttribute($value)
+    {
         return  Role::find($this->role_id)->name;
     }
 

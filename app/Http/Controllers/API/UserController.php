@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Student;
 use Illuminate\Http\Request;
 //use Tymon\JWTAuth\JWTAuth;
 use JWTAuth;
@@ -49,7 +50,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -94,6 +95,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }

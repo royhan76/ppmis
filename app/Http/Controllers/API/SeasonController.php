@@ -18,7 +18,11 @@ class SeasonController extends Controller
      */
     public function index()
     {
-        //
+        $seasons = Season::all();
+        return response()->json([
+            'success' => true,
+            'data' => $seasons
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -39,7 +43,21 @@ class SeasonController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->only('year');
+        $validator = Validator::make($data, [
+            'year' => 'required|unique:App\Models\Season,year',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->messages()], 500);
+        }
+        $season = Season::create([
+            'year' => $request->year
+        ]);
+        return response()->json([
+            'success' => true,
+            'data' => $season
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -73,7 +91,21 @@ class SeasonController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->only('year');
+        $validator = Validator::make($data, [
+            'year' => ['required'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->messages()], 500);
+        }
+        $season = Season::find($id);
+        $season->year = $request->year;
+        $season->save();
+        return response()->json([
+            'success' => true,
+            'data' => $season
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -84,6 +116,16 @@ class SeasonController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $season = Season::find($id);
+            $season->delete();
+            return response()->json([
+                'success' => true
+            ], Response::HTTP_OK);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

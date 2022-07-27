@@ -33,6 +33,7 @@ Route::resource('foul', FoulController::class);
 Route::resource('role', RoleController::class);
 Route::resource('room', RoomController::class);
 Route::resource('season', SeasonController::class);
+Route::resource('student', StudentController::class);
 
 Route::post('login', [ApiController::class, 'authenticate']);
 // Route::post('register', [ApiController::class, 'register']);
