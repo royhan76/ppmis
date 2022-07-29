@@ -19,7 +19,9 @@ use App\Http\Controllers\Admin\GradeController;
 use App\Http\Controllers\Admin\SeasonController;
 use App\Http\Controllers\Admin\StudentBillController;
 use App\Http\Controllers\Admin\StudentController;
-use App\Models\Role;
+use App\Http\Controllers\Admin\LessonController;
+use App\Http\Controllers\Admin\TeachController;
+use App\Http\Controllers\Admin\LessonValueController;
 
 /*
 |--------------------------------------------------------------------------

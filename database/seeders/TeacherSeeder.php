@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class StudentBillSeeder extends Seeder
+class TeacherSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,10 +14,10 @@ class StudentBillSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('student_bills')->insert([
-            'student_id' => 1,
-            'bill_id' => 2,
-            'status' => 0,
+        DB::table('teachers')->insert([
+            'id' => 1,
+            'user_id' => 3,
+            'grade_id' => 1,
             'year' => 2022
         ]);
     }

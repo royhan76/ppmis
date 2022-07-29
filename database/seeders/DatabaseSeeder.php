@@ -19,6 +19,9 @@ use Database\Seeders\BillSeeder;
 use Database\Seeders\StudentSeeder;
 use Database\Seeders\StudentBillSeeder;
 use Database\Seeders\FoulSeeder;
+use Database\Seeders\LessonSeeder;
+use Database\Seeders\TeacherSeeder;
+use Database\Seeders\LessonValueSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -45,7 +48,10 @@ class DatabaseSeeder extends Seeder
              GradeSeeder::class,
              StudentSeeder::class,
             StudentBillSeeder::class,
-            FoulSeeder::class
+            FoulSeeder::class,
+            LessonSeeder::class,
+            TeacherSeeder::class,
+            LessonValueSeeder::class
         ]);
     }
 }

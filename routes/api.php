@@ -12,6 +12,9 @@ use App\Http\Controllers\API\FoulController;
 use App\Http\Controllers\API\RoleController;
 use App\Http\Controllers\API\RoomController;
 use App\Http\Controllers\API\SeasonController;
+use App\Http\Controllers\API\LessonController;
+use App\Http\Controllers\API\TeacherController;
+use App\Http\Controllers\API\LessonValueController;
 
 
 /*
@@ -34,6 +37,9 @@ Route::resource('role', RoleController::class);
 Route::resource('room', RoomController::class);
 Route::resource('season', SeasonController::class);
 Route::resource('student', StudentController::class);
+Route::resource('teacher', TeacherController::class);
+Route::resource('lesson', LessonController::class);
+Route::resource('lesson-value', LessonValueController::class);
 
 Route::post('login', [ApiController::class, 'authenticate']);
 // Route::post('register', [ApiController::class, 'register']);

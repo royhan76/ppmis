@@ -19,6 +19,8 @@ class CreateStudentBillsTable extends Migration
             $table->foreign('student_id')->references('id')->on('students');
             $table->bigInteger('bill_id')->unsigned();
             $table->foreign('bill_id')->references('id')->on('bills');
+            $table->bigInteger('year');
+            $table->foreign('year')->references('year')->on('seasons');
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });

@@ -14,20 +14,15 @@ class StudentBill extends Model
 
     protected $table = 'student_bills';
 
-    protected $fillable = ['status', 'student_id', 'bill_id'];
+    protected $fillable = ['status', 'student_id', 'bill_id', 'year'];
 
     protected $hidden = ['student_id', 'bill_id'];
 
     protected $appends = [
         'student_name',
         'bill_name',
-        'year',
     ];
 
-    public function getYearAttribute($value)
-    {
-        return Bill::find($this->bill_id)->year;
-    }
 
     public function getStudentNameAttribute($value)
     {

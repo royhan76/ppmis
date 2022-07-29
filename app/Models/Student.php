@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Grade;
 use App\Models\Season;
 use App\Models\Room;
+use App\Models\LessonValue;
 
 class Student extends Model
 {
@@ -32,7 +33,8 @@ class Student extends Model
         'grade_name',
         'role_name',
         'fouls',
-        'bills'
+        'bills',
+        'lesson_values'
     ];
 
     protected $hidden = [
@@ -43,11 +45,14 @@ class Student extends Model
         'image',
     ];
 
-
+    public function getLessonValuesAttribute($value)
+    {
+        return LessonValue::where('student_id', $this->id)->get();
+    }
 
     public function getBillsAttribute($value)
     {
-        return StudentBill::where(['student_id' =>  $this->id])->get();
+        return StudentBill::where(['student_id' =>  $this->id, 'year' => $this->year])->get();
     }
 
     public function getFoulsAttribute($value)

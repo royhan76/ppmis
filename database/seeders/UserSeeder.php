@@ -24,6 +24,7 @@ class UserSeeder extends Seeder
             'email' => 'ppmis@gmail.com',
             'number' => '123457',
             'password' => Hash::make('itppmis'),
+            'image' => 'admin.png'
         ]);
         DB::table('users')->insert([
             'id' => 2,
@@ -33,6 +34,7 @@ class UserSeeder extends Seeder
             'email' => 'mabrur@gmail.com',
             'number' => '123457',
             'password' => Hash::make('mabrursatori'),
+            'image' => 'mabrur.jpg'
         ]);
         DB::table('users')->insert([
             'id' => 3,
@@ -42,6 +44,7 @@ class UserSeeder extends Seeder
             'email' => 'roikhani@gmail.com',
             'number' => '123457',
             'password' => Hash::make('roichani'),
+            'image' => 'roikani.jpg'
         ]);
     }
 }

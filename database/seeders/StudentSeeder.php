@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Database\Seeder;
@@ -21,7 +22,7 @@ class StudentSeeder extends Seeder
             'name' => 'Mabrur',
             'nomor_induk_santri' => '1234567',
             'date_birth' => Carbon::now(),
-            'image' => '',
+            'image' => 'mabrur.jpeg',
             'arrival' => 'LAMA',
             'address' => 'Perbutulan Sumber Cirebon',
             'room_id' => 1,
