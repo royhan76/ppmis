@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Teacher;
+use App\Models\Grade;
+use App\Models\Season;
+use Illuminate\Validation\Rule;
+use Exception;
 
 class TeacherController extends Controller
 {
@@ -14,7 +19,8 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        //
+        $teachers = Teacher::all();
+        return $teachers;
     }
 
     /**

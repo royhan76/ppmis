@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\LessonController;
 use App\Http\Controllers\Admin\TeachController;
 use App\Http\Controllers\Admin\LessonValueController;
+use App\Http\Controllers\Admin\TeacherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,9 @@ Route::prefix('admin')
             'student' => StudentController::class,
             'student-bill' => StudentBillController::class,
             'season' => SeasonController::class,
+            'lesson' => LessonController::class,
+            'teacher' => TeacherController::class,
+            'lesson-value' => LessonValueController::class
         ]);
         Route::resource('contact', ContactController::class)->only([
             'index', 'edit', 'update'
