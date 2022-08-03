@@ -60,7 +60,7 @@ class LessonController extends Controller
             'grade_id' => $request->grade,
         ]);
 
-        return redirect('lesson/student')->with('status', 'Mata Pelajaran berhasil ditambahkan');
+        return redirect('admin/lesson')->with('status', 'Mata Pelajaran berhasil ditambahkan');
     }
 
     /**
@@ -86,7 +86,7 @@ class LessonController extends Controller
         $seasons = Season::all();
         $grades = Grade::all();
         $lesson = Lesson::find($id);
-        return view('admin.pages.student.edit', [
+        return view('admin.pages.lesson.edit', [
             'seasons' => $seasons,
             'grades' => $grades,
             'lesson' => $lesson
@@ -114,7 +114,7 @@ class LessonController extends Controller
         $lesson->grade_id = $request->grade;
         $lesson->save();
 
-        return redirect('lesson/student')->with('status', 'Mata Pelajaran berhasil diupdata');
+        return redirect('admin/lesson')->with('status', 'Mata Pelajaran berhasil diupdata');
     }
 
     /**

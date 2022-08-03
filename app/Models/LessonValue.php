@@ -15,7 +15,11 @@ class LessonValue extends Model
 
     protected $fillable = [
         'year',
-        'value'
+        'value',
+        'student_id',
+        'lesson_id',
+        'student_id',
+        'grade_id'
     ];
 
 
@@ -28,11 +32,7 @@ class LessonValue extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'lesson_id',
-        'student_id',
-        'lesson_id',
-        'student_id',
-        'grade_id'
+
     ];
 
     public function getGradeNameAttribute($value)

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Teacher;
 use App\Models\Grade;
 use App\Models\Season;
+use App\Models\User;
 use Illuminate\Validation\Rule;
 use Exception;
 
@@ -30,7 +31,15 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        //
+        $seasons = Season::all();
+        $grades = Grade::all();
+        $users = User::all();
+
+        return view('admin.pages.teacher.create', [
+            'seasons' => $seasons,
+            'grades' => $grades,
+            'users' => $users
+        ]);
     }
 
     /**
@@ -41,7 +50,19 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required',
+            'year' => 'required',
+            'grade' => 'required',
+        ]);
+
+        $teacher = Teacher::create([
+            'user_id' => $request->name,
+            'year' => $request->year,
+            'grade_id' => $request->grade,
+        ]);
+
+        return redirect('teacher/student')->with('status', 'Wali kelas berhasil ditambahkan');
     }
 
     /**
@@ -63,7 +84,16 @@ class TeacherController extends Controller
      */
     public function edit($id)
     {
-        //
+        $seasons = Season::all();
+        $grades = Grade::all();
+        $users = User::all();
+        $teacher = Teacher::find($id);
+        return view('admin.pages.teacher.edit', [
+            'seasons' => $seasons,
+            'grades' => $grades,
+            'teacher' => $teacher,
+            'users' => $users
+        ]);
     }
 
     /**
@@ -75,7 +105,19 @@ class TeacherController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required',
+            'year' => 'required',
+            'grade' => 'required',
+        ]);
+
+        $teacher =  Teacher::find($id);
+        $teacher->user_id = $request->name;
+        $teacher->year = $request->year;
+        $teacher->grade_id = $request->grade;
+        $teacher->save();
+
+        return redirect('admin/teacher')->with('status', 'Wali Kelas berhasil diupdata');
     }
 
     /**
@@ -86,6 +128,13 @@ class TeacherController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $teacher = Teacher::find($id);
+        try {
+            $teacher->delete();
+
+            return redirect('admin/teacher')->with('status', 'Wali kelas Berhasil Dihapus!');
+        } catch (Exception $e) {
+            return redirect('admin/teacher')->with('status', 'Wali kelas Gagal Dihapus!');
+        }
     }
 }

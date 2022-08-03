@@ -4,6 +4,10 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Teacher;
+use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
+use Exception;
 
 class TeacherController extends Controller
 {
@@ -14,7 +18,11 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        //
+        $teachers = Teacher::all();
+        return response()->json([
+            'success' => true,
+            'data' => $teachers
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -35,7 +43,22 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->only('user_id', 'year', 'grade_id');
+        $validator = Validator::make($data, [
+            'user_id' => 'required',
+            'year' => 'required',
+            'grade_id' => 'required',
+        ]);
+
+        $teacher = Teacher::create([
+            'user_id' => $request->user_id,
+            'year' => $request->year,
+            'grade_id' => $request->grade_id
+        ]);
+        return response()->json([
+            'success' => true,
+            'data' => $teacher
+        ], Response::HTTP_OK);
     }
 
     /**
