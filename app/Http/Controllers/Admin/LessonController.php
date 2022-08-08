@@ -48,6 +48,7 @@ class LessonController extends Controller
      */
     public function store(Request $request)
     {
+        
         $validated = $request->validate([
             'name' => 'required',
             'year' => 'required',

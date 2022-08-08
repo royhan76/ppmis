@@ -1,12 +1,12 @@
 @extends('admin.layout.admin')
 @section('title')
-    Admin | Grade
+    Admin | Lesson
 @endsection
 @section('content')
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">Edit Grade</h4>
+                <h4 class="page-title">Edit Lesson</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="#">
@@ -17,13 +17,13 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Grade</a>
+                        <a href="#">Lesson</a>
                     </li>
                     <li class="separator">
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Add Catagory</a>
+                        <a href="#">Add Lesson</a>
                     </li>
                 </ul>
             </div>
@@ -33,15 +33,14 @@
                     <div class="card">
                         <div class="card-header">
                             <div>
-                                <a class="btn btn-primary btn-round ml-auto text-white"
-                                    href="{{ route('grade.store') }}">
+                                <a class="btn btn-primary btn-round ml-auto text-white" href="{{ route('lesson.store') }}">
                                     <i class="fa fa-arrow-left"></i>
                                     Back
                                 </a>
                             </div>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('grade.update', $grade->id) }}">
+                            <form method="POST" action="{{ route('lesson.update', $lesson->id) }}">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
@@ -51,24 +50,55 @@
                                         {{-- NAME --}}
                                         <div class="form-group {{ $errors->first('name') ? 'has-error' : '' }}">
                                             <label for="name">Name</label>
-                                            <input type="text" name="name" class="form-control input-name" id="name"
-                                                placeholder="Name" value="{{ old('name') ?? $grade->name }}">
+                                            <input type="text" name="name" class="form-control input-name"
+                                                id="name" placeholder="Name"
+                                                value="{{ old('name') ?? $lesson->name }}">
                                             <small class="form-text text-danger">
                                                 {{ $errors->first('name') }}</small>
                                         </div>
-                                        
-                                        <div class="card-action d-flex justify-content-end">
-                                            <button class="btn btn-success">Save</button>
+                                    </div>
+
+                                    {{-- YEAR --}}
+                                    <div class="col-md-6">
+                                        <div class="form-group {{ $errors->first('year') ? 'has-error' : '' }}">
+                                            <label for="year">Tahun Ajaran</label>
+                                            <select class="form-control" id="year" name="year">
+                                                <option value="">--PILIH TAHUN AJARAN--</option>
+                                                @foreach ($seasons as $season)
+                                                    <option
+                                                        {{ (old('year') && old('year') == $season->year) || $lesson->year == $season->year ? 'selected' : '' }}
+                                                        value="{{ $season->year }}">{{ $season->year }}</option>
+                                                @endforeach
+
+
+                                            </select>
+                                            <small class="form-text text-danger">
+                                                {{ $errors->first('year') }}</small>
                                         </div>
                                     </div>
+
+                                    {{-- KELAS --}}
                                     <div class="col-md-6">
-                                        {{-- NUMBER --}}
-                                        <div class="form-group {{ $errors->first('number') ? 'has-error' : '' }}">
-                                            <label for="number">NUMBER</label>
-                                            <input type="number" name="number" class="form-control input-name" id="number"
-                                                placeholder="number" value="{{ old('number') ?? $grade->number }}">
+                                        <div class="form-group {{ $errors->first('grade') ? 'has-error' : '' }}">
+                                            <label for="grade">Kelas</label>
+                                            <select class="form-control" id="grade" name="grade">
+                                                <option value="">--PILIH KELAS--</option>
+                                                @foreach ($grades as $grade)
+                                                    <option
+                                                        {{ (old('grade') && old('grade') == $grade->id) || $lesson->grade_id == $grade->id ? 'selected' : '' }}
+                                                        value="{{ $grade->id }}">{{ $grade->name }}</option>
+                                                @endforeach
+
+
+                                            </select>
                                             <small class="form-text text-danger">
-                                                {{ $errors->first('number') }}</small>
+                                                {{ $errors->first('grade') }}</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="card-action d-flex justify-content-end">
+                                            <button class="btn btn-success">Save</button>
                                         </div>
                                     </div>
                                 </div>

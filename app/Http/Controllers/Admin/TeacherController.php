@@ -21,7 +21,7 @@ class TeacherController extends Controller
     public function index()
     {
         $teachers = Teacher::all();
-        return $teachers;
+        return view('admin.pages.teacher.index', ['teachers' => $teachers]);
     }
 
     /**
@@ -62,7 +62,7 @@ class TeacherController extends Controller
             'grade_id' => $request->grade,
         ]);
 
-        return redirect('teacher/student')->with('status', 'Wali kelas berhasil ditambahkan');
+        return redirect('admin/teacher')->with('status', 'Wali kelas berhasil ditambahkan');
     }
 
     /**

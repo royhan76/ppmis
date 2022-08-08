@@ -37,8 +37,8 @@ Route::resource('role', RoleController::class);
 Route::resource('room', RoomController::class);
 Route::resource('season', SeasonController::class);
 Route::resource('student', StudentController::class);
-Route::resource('teacher', TeacherController::class);
-Route::resource('lesson', LessonController::class);
+//Route::resource('teacher', TeacherController::class);
+//Route::resource('lesson', LessonController::class);
 Route::resource('lesson-value', LessonValueController::class);
 
 Route::post('login', [ApiController::class, 'authenticate']);

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Student;
 use App\Models\Lesson;
 use App\Models\Grade;
+use App\Models\Teacher;
 
 class LessonValue extends Model
 {
@@ -18,7 +19,7 @@ class LessonValue extends Model
         'value',
         'student_id',
         'lesson_id',
-        'student_id',
+        'teacher_id',
         'grade_id'
     ];
 
@@ -26,7 +27,8 @@ class LessonValue extends Model
     protected $appends = [
         'student_name',
         'lesson_name',
-        'grade_name'
+        'grade_name',
+        'teacher_name'
     ];
 
     protected $hidden = [
@@ -34,6 +36,8 @@ class LessonValue extends Model
         'updated_at',
 
     ];
+
+
 
     public function getGradeNameAttribute($value)
     {
@@ -48,5 +52,25 @@ class LessonValue extends Model
     public function getLessonNameAttribute($value)
     {
         return Lesson::find($this->lesson_id)->name;
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+
+    public function lesson()
+    {
+        return $this->belongsTo(Lesson::class);
+    }
+
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class);
+    }
+
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
     }
 }
