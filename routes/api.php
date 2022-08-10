@@ -28,24 +28,49 @@ use App\Http\Controllers\API\LessonValueController;
 |
 */
 
-Route::resource('api-student', StudentController::class);
-Route::resource('api-teacher', TeacherController::class);
-Route::resource('api-user', UserController::class);
-Route::resource('api-grade', GradeController::class);
-Route::resource('api-bill', BillController::class);
-Route::resource('api-dormitory', DormitoryController::class);
-Route::resource('api-foul', FoulController::class);
-Route::resource('api-role', RoleController::class);
-Route::resource('api-room', RoomController::class);
-Route::resource('api-season', SeasonController::class);
 
 
-Route::resource('api-lesson', LessonController::class);
-Route::resource('api-lesson-value', LessonValueController::class);
+
 Route::post('api/login', [ApiController::class, 'authenticate']);
 Route::post('api/register', [ApiController::class, 'register']);
 
 Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('logout', [ApiController::class, 'logout']);
     Route::get('get_user', [ApiController::class, 'get_user']);
+    Route::resource('api-student', StudentController::class)->only([
+        'index', 'store', 'update', 'delete'
+    ]);
+    Route::resource('api-teacher', TeacherController::class)->only([
+        'index', 'store', 'update', 'delete'
+    ]);
+    Route::resource('api-user', UserController::class)->only([
+        'index', 'store', 'update', 'delete'
+    ]);
+    Route::resource('api-grade', GradeController::class)->only([
+        'index', 'store', 'update', 'delete'
+    ]);
+    Route::resource('api-bill', BillController::class)->only([
+        'index', 'store', 'update', 'delete'
+    ]);
+    Route::resource('api-dormitory', DormitoryController::class)->only([
+        'index', 'store', 'update', 'delete'
+    ]);
+    Route::resource('api-foul', FoulController::class)->only([
+        'index', 'store', 'update', 'delete'
+    ]);
+    Route::resource('api-role', RoleController::class)->only([
+        'index', 'store', 'update', 'delete'
+    ]);
+    Route::resource('api-room', RoomController::class)->only([
+        'index', 'store', 'update', 'delete'
+    ]);
+    Route::resource('api-season', SeasonController::class)->only([
+        'index', 'store', 'update', 'delete'
+    ]);
+    Route::resource('api-lesson', LessonController::class)->only([
+        'index', 'store', 'update', 'delete'
+    ]);
+    Route::resource('api-lesson-value', LessonValueController::class)->only([
+        'index', 'store', 'update', 'delete'
+    ]);
 });

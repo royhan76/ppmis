@@ -21,12 +21,27 @@ class Teacher extends Model
 
     protected $appends = [
         'name',
+        'grade_name',
+    ];
+
+    protected $hidden = [
+        'user_id',
+        'grade_id',
+        'created_at',
+        'updated_at'
     ];
 
 
+    public function getGradeNameAttribute($value)
+    {
+        return Grade::find($this->grade_id)->name;
+    }
+
     public function getNameAttribute($value)
     {
-        return User::find($this->user_id)->name;
+        $user = User::find($this->user_id);
+        if ($user == null) return null;
+        return $user;
     }
 
     public function user()

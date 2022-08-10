@@ -95,6 +95,31 @@
 											<span class="sub-item">Tagihan</span>
 										</a>
 									</li>
+                                    <li>
+										<a href="{{ route('student.index') }}">
+											<span class="sub-item">Santri</span>
+										</a>
+									</li>
+                                    <li>
+										<a href="{{ route('teacher.index') }}">
+											<span class="sub-item">Asatidz</span>
+										</a>
+									</li>
+                                    <li>
+										<a href="{{ route('lesson.index') }}">
+											<span class="sub-item">Mata Pelajaran</span>
+										</a>
+									</li>
+                                    <li>
+										<a href="{{ route('lesson-value.index') }}">
+											<span class="sub-item">Nilai</span>
+										</a>
+									</li>
+                                    <li>
+										<a href="{{ route('foul.index') }}">
+											<span class="sub-item">Pelanggaran</span>
+										</a>
+									</li>
 								</ul>
 							</div>
 						</li>
