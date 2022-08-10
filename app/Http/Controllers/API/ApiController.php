@@ -61,11 +61,11 @@ class ApiController extends Controller
 
     public function authenticate(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('username', 'password');
 
         //valid credential
         $validator = Validator::make($credentials, [
-            'email' => 'required|email',
+            'username' => 'required',
             'password' => 'required|string|min:6|max:50'
         ]);
 
@@ -90,7 +90,7 @@ class ApiController extends Controller
                 'message' => 'Could not create token.',
             ], 500);
         }
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('username', $request->username)->first();
         $user->students = $user->students;
         //Token created, return with success response and jwt token
         return response()->json([
