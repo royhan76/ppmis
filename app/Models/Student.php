@@ -43,6 +43,8 @@ class Student extends Model
         'room_id',
         'role_id',
         'image',
+        'created_at',
+        'updated_at'
     ];
 
     public function getLessonValuesAttribute($value)

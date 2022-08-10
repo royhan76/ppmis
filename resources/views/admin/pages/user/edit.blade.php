@@ -32,9 +32,10 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            @if(Auth::user()->role == 'ADMIN')
+                            @if (Auth::user()->role == 'ADMIN')
                                 <div>
-                                    <a class="btn btn-primary btn-round ml-auto text-white" href="{{ route('user.index') }}">
+                                    <a class="btn btn-primary btn-round ml-auto text-white"
+                                        href="{{ route('user.index') }}">
                                         <i class="fa fa-arrow-left"></i>
                                         Back
                                     </a>
@@ -43,7 +44,8 @@
 
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('user.update', $user->id) }}">
+                            <form method="POST" action="{{ route('user.update', $user->id) }}"
+                                enctype="multipart/form-data">
                                 @method('PUT')
                                 @csrf
                                 <div class="row">
@@ -57,6 +59,10 @@
                                                 placeholder="Enter Username">
                                             <small class="form-text text-danger"> {{ $errors->first('username') }}</small>
                                         </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
                                         {{-- NAME --}}
                                         <div class="form-group {{ $errors->first('name') ? 'has-error' : '' }}">
                                             <label for="name">Name</label>
@@ -65,6 +71,29 @@
                                             <small class="form-text text-danger"> {{ $errors->first('name') }}</small>
                                         </div>
                                     </div>
+
+                                    <div class="col-md-6">
+                                        {{-- EMAIL --}}
+                                        <div class="form-group {{ $errors->first('email') ? 'has-error' : '' }}">
+                                            <label for="email">Email</label>
+                                            <input type="email" value="{{ old('email') ? old('email') : $user->email }}"
+                                                name="email" class="form-control" id="email"
+                                                placeholder="Enter Email">
+                                            <small class="form-text text-danger"> {{ $errors->first('email') }}</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        {{-- PHONE --}}
+                                        <div class="form-group {{ $errors->first('phone') ? 'has-error' : '' }}">
+                                            <label for="phone">Phone</label>
+                                            <input type="number" value="{{ old('phone') ? old('phone') : $user->phone }}"
+                                                name="phone" class="form-control" id="phone"
+                                                placeholder="Enter Phone">
+                                            <small class="form-text text-danger"> {{ $errors->first('phone') }}</small>
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-6">
                                         {{-- PASSWORD --}}
                                         <div class="form-group {{ $errors->first('password') ? 'has-error' : '' }}">
@@ -75,6 +104,9 @@
                                             <small class="form-text text-danger">
                                                 {{ $errors->first('password') }}</small>
                                         </div>
+                                    </div>
+
+                                    <div class="col-md-6">
                                         {{-- RE-PASSWORD --}}
                                         <div class="form-group {{ $errors->first('repassword') ? 'has-error' : '' }}">
                                             <label for="repassword">Ulangi Password</label>
@@ -83,6 +115,26 @@
                                             <small class="form-text text-danger">
                                                 {{ $errors->first('repassword') }}</small>
                                         </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        {{-- IMAGE --}}
+                                        <div class="form-group {{ $errors->first('image') ? 'has-error' : '' }}">
+                                            <label for="image">Image</label>
+                                            <input type="file" class="form-control-file" accept="image/*" name="image"
+                                                id="image">
+                                            <small class="form-text text-danger"> {{ $errors->first('image') }}</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="avatar avatar-xxl" style="width: 400px; height: 300px;">
+                                            <img src="{{ !$user->image || $user->image == '' ? asset('atlantis/img/santri.jpg') : $user->image_url }}"
+                                                id="output" style="object-fit: fill;" class="avatar-img rounded">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
                                         <div class="card-action d-flex justify-content-end">
                                             <button class="btn btn-success">Save</button>
                                         </div>
@@ -104,7 +156,12 @@
             // let mainUrl = {{ Illuminate\Support\Js::from(Request::url()) }};
             // let token = {{ Illuminate\Support\Js::from(csrf_token()) }};
 
-
+            image.onchange = evt => {
+                const [file] = image.files
+                if (file) {
+                    output.src = URL.createObjectURL(file)
+                }
+            }
 
 
             var isStoreErrror = {{ Illuminate\Support\Js::from($errors->any()) }};

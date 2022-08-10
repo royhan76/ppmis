@@ -8,9 +8,16 @@ use App\Models\Lesson;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use Exception;
+use JWTAuth;
 
 class LessonController extends Controller
 {
+    protected $user;
+
+    public function __construct()
+    {
+        $this->user = JWTAuth::parseToken()->authenticate();
+    }
     /**
      * Display a listing of the resource.
      *

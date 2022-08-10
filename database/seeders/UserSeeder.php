@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             'username' => 'admin.ppmis',
             'role' => 'ADMIN',
             'email' => 'ppmis@gmail.com',
-            'number' => '123457',
+            'phone' => '123457',
             'password' => Hash::make('itppmis'),
             'image' => 'admin.png'
         ]);
@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
             'username' => 'mabrur.satori',
             'role' => 'USER',
             'email' => 'mabrur@gmail.com',
-            'number' => '123457',
+            'phone' => '123457',
             'password' => Hash::make('mabrursatori'),
             'image' => 'mabrur.jpg'
         ]);
@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
             'username' => 'roichani',
             'role' => 'USER',
             'email' => 'roikhani@gmail.com',
-            'number' => '123457',
+            'phone' => '123457',
             'password' => Hash::make('roichani'),
             'image' => 'roikani.jpg'
         ]);

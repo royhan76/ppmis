@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\LessonValue;
 
 class LessonValueController extends Controller
 {
@@ -14,7 +15,8 @@ class LessonValueController extends Controller
      */
     public function index()
     {
-        //
+        $lesson_values = LessonValue::all();
+        return $lesson_values;
     }
 
     /**

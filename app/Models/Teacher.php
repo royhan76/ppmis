@@ -11,14 +11,14 @@ use App\Models\Season;
 class Teacher extends Model
 {
 
-
+    use HasFactory;
     protected $fillable = [
         'id',
         'user_id',
         'grade_id',
         'year',
     ];
-    use HasFactory;
+
     protected $appends = [
         'name',
     ];
@@ -26,7 +26,6 @@ class Teacher extends Model
 
     public function getNameAttribute($value)
     {
-
         return User::find($this->user_id)->name;
     }
 

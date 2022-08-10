@@ -44,7 +44,10 @@
                                         <tr>
                                             <th>Name</th>
                                             <th>Username</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
                                             <th>Role</th>
+                                            <th>Image</th>
                                             <th style="width: 10%">Action</th>
                                         </tr>
                                     </thead>
@@ -53,7 +56,15 @@
                                             <tr>
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->username }}</td>
+                                                <td>{{ $user->email }}</td>
+                                                <td>{{ $user->phone }}</td>
                                                 <td>{{ $user->role }}</td>
+                                                <td>
+                                                    <div class="avatar avatar-xl m-2">
+                                                        <img src="{{ !$user->image || $user->image == '' ? asset('atlantis/img/santri.jpg') : $user->image_url }}"
+                                                            alt=" ..." class="avatar-img rounded">
+                                                    </div>
+                                                </td>
                                                 <td>
                                                     <div class="form-button-action">
                                                         <a href="{{ route('user.edit', $user->id) }}" type="button"
@@ -148,37 +159,39 @@
 
             //         });
 
-            $('#basic-datatables').DataTable({
-			});
+            $('#basic-datatables').DataTable({});
 
-            $('#multi-filter-select').DataTable( {
-				"pageLength": 5,
-				initComplete: function () {
-					this.api().columns().every( function () {
-						var column = this;
-						var select = $('<select class="form-control"><option value=""></option></select>')
-						.appendTo( $(column.footer()).empty() )
-						.on( 'change', function () {
-							var val = $.fn.dataTable.util.escapeRegex(
-								$(this).val()
-								);
+            $('#multi-filter-select').DataTable({
+                "pageLength": 5,
+                initComplete: function() {
+                    this.api().columns().every(function() {
+                        var column = this;
+                        var select = $(
+                                '<select class="form-control"><option value=""></option></select>'
+                            )
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function() {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
 
-							column
-							.search( val ? '^'+val+'$' : '', true, false )
-							.draw();
-						} );
+                                column
+                                    .search(val ? '^' + val + '$' : '', true, false)
+                                    .draw();
+                            });
 
-						column.data().unique().sort().each( function ( d, j ) {
-							select.append( '<option value="'+d+'">'+d+'</option>' )
-						} );
-					} );
-				}
-			});
+                        column.data().unique().sort().each(function(d, j) {
+                            select.append('<option value="' + d + '">' + d +
+                                '</option>')
+                        });
+                    });
+                }
+            });
 
             // Add Row
-			$('#add-row').DataTable({
-				"pageLength": 5,
-			});
+            $('#add-row').DataTable({
+                "pageLength": 5,
+            });
         });
     </script>
 @endpush

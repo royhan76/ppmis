@@ -8,16 +8,17 @@ use App\Models\Student;
 
 class Foul extends Model
 {
-    
+
     use HasFactory;
 
-    protected $fillable = ['name', 'date']; 
+    protected $fillable = ['name', 'date'];
 
-    protected $hidden = ['student_id'];
+    protected $hidden = ['student_id', 'updated_at', 'created_at'];
 
     protected $appends = ['student_name'];
 
-    public function getStudentNameAttribute($value){
+    public function getStudentNameAttribute($value)
+    {
         return Student::find($this->student_id)->name;
     }
 

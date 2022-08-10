@@ -28,28 +28,24 @@ use App\Http\Controllers\API\LessonValueController;
 |
 */
 
-Route::resource('user', UserController::class);
-Route::resource('grade', GradeController::class);
-Route::resource('bill', BillController::class);
-Route::resource('dormitory', DormitoryController::class);
-Route::resource('foul', FoulController::class);
-Route::resource('role', RoleController::class);
-Route::resource('room', RoomController::class);
-Route::resource('season', SeasonController::class);
-Route::resource('student', StudentController::class);
-//Route::resource('teacher', TeacherController::class);
-//Route::resource('lesson', LessonController::class);
-Route::resource('lesson-value', LessonValueController::class);
+Route::resource('api-student', StudentController::class);
+Route::resource('api-teacher', TeacherController::class);
+Route::resource('api-user', UserController::class);
+Route::resource('api-grade', GradeController::class);
+Route::resource('api-bill', BillController::class);
+Route::resource('api-dormitory', DormitoryController::class);
+Route::resource('api-foul', FoulController::class);
+Route::resource('api-role', RoleController::class);
+Route::resource('api-room', RoomController::class);
+Route::resource('api-season', SeasonController::class);
 
-Route::post('login', [ApiController::class, 'authenticate']);
-// Route::post('register', [ApiController::class, 'register']);
+
+Route::resource('api-lesson', LessonController::class);
+Route::resource('api-lesson-value', LessonValueController::class);
+Route::post('api/login', [ApiController::class, 'authenticate']);
+Route::post('api/register', [ApiController::class, 'register']);
 
 Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('logout', [ApiController::class, 'logout']);
     Route::get('get_user', [ApiController::class, 'get_user']);
-
-    Route::get('/student/{id}', [StudentController::class, 'getStudent']);
-    Route::get('/student-bill/{id}', [StudentController::class, 'getStudentBill']);
-    Route::get('/student-foul/{id}', [StudentController::class, 'getStudentFoul']);
-    Route::get('test', [StudentController::class, 'index']);
 });

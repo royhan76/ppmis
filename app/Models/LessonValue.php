@@ -17,10 +17,7 @@ class LessonValue extends Model
     protected $fillable = [
         'year',
         'value',
-        'student_id',
-        'lesson_id',
-        'teacher_id',
-        'grade_id'
+
     ];
 
 
@@ -34,10 +31,22 @@ class LessonValue extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
+        'student_id',
+        'lesson_id',
+        'teacher_id',
+        'grade_id'
 
     ];
 
+    public function getTeacherNameAttribute($value)
+    {
+        $teacher = Teacher::find($this->teacher_id);
+        if ($teacher != null) {
+            return $teacher->name;
+        }
 
+        return null;
+    }
 
     public function getGradeNameAttribute($value)
     {

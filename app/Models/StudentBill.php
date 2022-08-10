@@ -16,7 +16,7 @@ class StudentBill extends Model
 
     protected $fillable = ['status', 'student_id', 'bill_id', 'year'];
 
-    protected $hidden = ['student_id', 'bill_id'];
+    protected $hidden = ['student_id', 'bill_id', 'created_at', 'updated_at'];
 
     protected $appends = [
         'student_name',

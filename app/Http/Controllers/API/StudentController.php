@@ -207,7 +207,7 @@ class StudentController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $grade
+            'data' => $student
         ], Response::HTTP_OK);
     }
 

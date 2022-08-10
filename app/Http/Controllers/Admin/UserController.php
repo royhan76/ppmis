@@ -54,8 +54,11 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'required|min:6|max:50',
             'username' => 'required|unique:App\Models\User,username|alpha_dash|min:6|max:50',
+            'email' => 'required|unique:App\Models\User,email',
+            'phone' => 'required',
             'password' => 'required|min:6',
-            'repassword' => 'required|same:password'
+            'repassword' => 'required|same:password',
+            'image' => 'required|image|max:1024'
         ]);
         $filename = '';
         if ($request->hasFile('image')) {
@@ -71,7 +74,9 @@ class UserController extends Controller
             'username' => $request->username,
             'password' => Hash::make($request->password),
             'role' => 'USER',
-            'image' => $filename
+            'email' => $request->email,
+            'image' => $filename,
+            'phone' => $request->phone
         ]);
 
         return redirect('admin/user')->with('status', 'User Berhasil Ditambahkan!');
@@ -95,7 +100,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        if (Auth::user()->id != $id) return redirect('admin');
+        //if (Auth::user()->id != $id) return redirect('admin');
         $user = User::find($id);
         return view(
             'admin.pages.user.edit',
@@ -115,10 +120,12 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
 
-        if (Auth::user()->id != $id) return redirect('admin');
+        //  if (Auth::user()->id != $id) return redirect('admin');
         $validated = $request->validate([
             'name' => 'required|min:6|max:50',
             'username' => ['required', 'alpha_dash', 'min:6', 'max:50', Rule::unique('users')->ignore($id)],
+            'email' => 'required',
+            'phone' => 'required',
         ]);
 
         $user = User::find($id);
@@ -136,7 +143,9 @@ class UserController extends Controller
         $user->image =  $filename;
         $user->username =  $request->username;
         $user->name = $request->name;
-        $user->password = ($request->password != null) ? Hash::make($request->password) : $request->old_password;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        if ($request->password != null) $user->password = Hash::make($request->password);
         $user->save();
 
         return redirect('admin/user')->with('status', 'User Berhasil Diupdate!');
