@@ -38,7 +38,7 @@
     <link href={{ asset('/assets/vendor/swiper/swiper-bundle.min.css') }} rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link rel="stylesheet" href='{{ asset('/assets/css/style.css') }}'>
+    <link rel="stylesheet" href={{ asset('/assets/css/style.css') }}>
     <link rel="stylesheet" href={{ asset('/atlantis/css/atlantis.css') }}>
     {{-- <link href='{{ asset('/atlantis/css/atlantis.css" rel="stylesheet') }}'> --}}
 
