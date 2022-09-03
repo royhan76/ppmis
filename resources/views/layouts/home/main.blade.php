@@ -39,7 +39,8 @@
 
     <!-- Template Main CSS File -->
     <link rel="stylesheet" href='{{ asset('/assets/css/style.css') }}'>
-    <link href='{{ asset('/atlantis/css/atlantis.css" rel="stylesheet') }}'>
+    <link rel="stylesheet" href={{ asset('/atlantis/css/atlantis.css') }}>
+    {{-- <link href='{{ asset('/atlantis/css/atlantis.css" rel="stylesheet') }}'> --}}
 
     <!-- =======================================================
   * Template Name: Medilab - v4.7.1
