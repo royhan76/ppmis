@@ -1,5 +1,5 @@
 <!-- Fonts and icons -->
-<script src="{{ asset('/public/atlantis/js/plugin/webfont/webfont.min.js') }}"></script>
+<script src="{{ asset('/atlantis/js/plugin/webfont/webfont.min.js') }}"></script>
 
 <script>
     WebFont.load({
@@ -10,7 +10,7 @@
             "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands",
                 "simple-line-icons"
             ],
-            urls: ["{{ asset('/publicatlantis/css/fonts.min.css') }}"]
+            urls: ["{{ asset('atlantis/css/fonts.min.css') }}"]
         },
 
         active: function() {
@@ -20,9 +20,9 @@
 </script>
 
 <!-- CSS Files -->
-<link rel="stylesheet" href="{{ asset('/public/atlantis/css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ asset('/atlantis/css/bootstrap.min.css') }}">
 
-<link rel="stylesheet" href="{{ asset('/public/atlantis/css/atlantis.min.css') }}">
+<link rel="stylesheet" href="{{ asset('/atlantis/css/atlantis.min.css') }}">
 
 <!-- CSS Just for demo purpose, don't include it in your project -->
-<link rel="stylesheet" href="{{ asset('/public/atlantis/css/demo.css') }}">
+<link rel="stylesheet" href="{{ asset('/atlantis/css/demo.css') }}">
